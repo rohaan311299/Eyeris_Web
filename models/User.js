@@ -2,7 +2,6 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { userInfo } = require('os');
 
 const UserSchema = new mongoose.Schema({
     name:{
@@ -28,11 +27,24 @@ const UserSchema = new mongoose.Schema({
     resetPasswordToken:{
         type:String
     },
+    mobile:{
+        type:String,
+        unique:true,
+        required:[true,"Plase add your number"]
+    },
     resetPasswordExpire:Date,
     createdAt:{
         type:Date,
         default:Date.now
-    }
+    },
+    orders:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref : "Order"
+    }],
+    profileImage:{
+        contentType:String,
+        imageData:Buffer
+    },
 })
 
 //Encrypt password using bcrypt
