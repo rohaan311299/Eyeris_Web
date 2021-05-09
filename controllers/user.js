@@ -1,12 +1,12 @@
 const User = require('../models/User');
-const OTPService = require("../services/otp");
 
 
 // @desc      Register User
 // @route     POST /api/v1/auth/register
 // @access    public
-exports.register = async(req, res, next) => {
-    const { name, email, mobile ,password, role , city  } = req.body;
+exports.register = async(req,res, next) => {
+    console.log(req.body)
+    const { name, email, mobile ,password, role} = req.body;
     const file = req.file;
     //Create user
     let user = new User({
@@ -25,12 +25,27 @@ exports.register = async(req, res, next) => {
 // @route     POST /api/v1/auth/login
 // @access    Public
 exports.login = async(req, res, next) => {
-    const {email} = req.body;
-    // Validate emil & password
-    if (!email) return res.status(400).json({success: false,error: 'Please provide email'})
+    console.log(req.body)
+    const {email,password} = req.body;
+    //Validate email and password 
+    if (!email || !password){
+        return next(new ErrorResponse('Please provide an email and password',400));
+    }
+
+
     // Check for user
-    const user = await  User.findOne({ email }).select({profileImage:0})
-    if (!user) return res.status(401).json({ success: false, error: 'Invalid email'})
+    const user = await User.findOne({email}).select('+password');
+
+    if(!user){
+        return next(new ErrorResponse('Invalid Credentials',401));
+    }
+    
+    
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch){
+        return next(new ErrorResponse('Invalid Credentials',401));  
+    }
+
     sendTokenResponse(user,200,res)
 };
 
@@ -73,7 +88,8 @@ exports.getUsers = async (req, res) => {
  * @ROUTE : /api/v1/auth/users/:id
  * @DESC  : Get  user by id
  */
-exports.getUserById= async (req,res)=>{
+exports.getUserById= async (req,res,next)=>{
+    console.log(req.params.id)
     const user = await User.findById(req.params.id);
     if(!user)return res.status(404).json("No user found");
     const userSend = user.getPublicProfile();

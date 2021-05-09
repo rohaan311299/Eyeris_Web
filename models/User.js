@@ -33,10 +33,6 @@ const UserSchema = new mongoose.Schema({
         required:[true,"Plase add your number"]
     },
     resetPasswordExpire:Date,
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
     orders:[{
         type:mongoose.Schema.Types.ObjectId,
         ref : "Order"
@@ -45,6 +41,9 @@ const UserSchema = new mongoose.Schema({
         contentType:String,
         imageData:Buffer
     },
+},
+{
+    timestamps:true
 })
 
 //Encrypt password using bcrypt
@@ -83,6 +82,16 @@ UserSchema.methods.getResetPasswordToken = function() {
 
 
     return resetToken;
+}
+
+UserSchema.methods.getPublicProfile = function(){
+    const userObj=this;
+    const user = userObj.toObject()
+    const userImageURL = `/api/v1/auth/${user._id}/profileimage`;
+    user.imageURL=userImageURL;
+    delete user.profileImage;
+    delete user.password;
+    return user;
 }
 
 module.exports = mongoose.model('User',UserSchema)

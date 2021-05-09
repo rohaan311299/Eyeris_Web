@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const Maharaj = require("../models/Maharaj")
 const jwt = require("jsonwebtoken");
 
 /**
@@ -22,7 +21,7 @@ const authRequired =(role="user")=>async (req, res, next) => {
                 msg: 'Invalid token',
             });
         }
-        const user = role=='user'?await User.findOne({ _id: decoded.id }).select({password:0}):await Maharaj.findOne({ _id: decoded.id }).select({password:0})
+        const user = role=='user'?await User.findOne({ _id: decoded.id }).select({password:0}): null
         
         if(!user){
             return res.status(404).json(`${role} not found!!`)

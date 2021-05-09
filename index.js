@@ -3,19 +3,26 @@ const express = require("express");
 const app = express();
 const dotenv = require('dotenv');
 const colors = require('colors');
-const morgan = require("morgan")
-const cookieParser = require("cookie-parser")
+const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 
 
 // paths 
 const connectDB = require('./config/db');
+const user = require("./routes/auth");
+
+
 
 
 connectDB();
 dotenv.config({ path: './config/config.env' });
+app.use(bodyParser.json())
 
 app.use(morgan('dev'));
 app.use(cookieParser());
+
+app.use("/api/v1/user",user)
 
 const server = app.listen(process.env.PORT, () => {
     console.log('App listening on port 5000!'.blue.bold);
@@ -34,7 +41,7 @@ const server = app.listen(process.env.PORT, () => {
     if (err.name === 'ValidationError') {
       return res.status(400).json(err.errors);
     }
-    
+
     if (err.name === 'MongoError') {
         console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
         return res.status(400).json({err:err.keyPattern});
