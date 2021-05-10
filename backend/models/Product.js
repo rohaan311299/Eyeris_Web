@@ -14,17 +14,10 @@ const ProductSchema = new mongoose.Schema({
         required:[true,'Please the description of the product'],
         maxlength:200
     },
-    exp:{
-        type:Date,
-    },
-    vendor:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:"Admin"
-    },
     category:{
         type:String,
-        required:[true,'Please provide category']
+        required:[true,'Please provide category'],
+        enum:["Lens","Frame"]
     },
     image:{
         contentType:String,
@@ -32,7 +25,7 @@ const ProductSchema = new mongoose.Schema({
     },
     price:{
         type:Number,
-        required:[true,'Please provide price']
+        required:[true,'Please provide price'],
     },
 
 })
