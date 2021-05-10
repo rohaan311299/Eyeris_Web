@@ -6,11 +6,11 @@ const OrderSchema = new mongoose.Schema({
         ref:'User',
         required:true
     },
-    product:{
+    products:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Product",
         required:true
-    },
+    }],
     status:{
         type:String,
         enum:["initiated","placed"],
@@ -20,7 +20,18 @@ const OrderSchema = new mongoose.Schema({
     modified:{
         type:Boolean,
         default:false
+    },
+    totalPrice:{
+        type:Number
+    },
+    quantity:{
+        type:Number
+    },
+    address:{
+        type:String,
+        maxlen:200
     }
+
 },{
     timestamps:true
 })

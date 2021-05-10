@@ -12,6 +12,7 @@ const bodyParser = require("body-parser");
 const connectDB = require('./config/db');
 const user = require("./routes/auth");
 const product = require("./routes/product");
+const order = require("./routes/order")
 
 
 
@@ -25,6 +26,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/user",user);
 app.use("/api/v1/product",product)
+app.use("/api/v1/order",order)
 
 
 const server = app.listen(process.env.PORT, () => {
