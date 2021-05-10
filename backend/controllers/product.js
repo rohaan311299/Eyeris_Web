@@ -1,5 +1,16 @@
 const Product = require('../models/Product')
 
+
+
+exports.getAllProducts = async(req,res,next) => {
+    const products = await Product.find();
+    if(!products){
+        return res.status(404).json({success:false,message:"No Products"})
+    }
+
+    res.status(200).json({success:true,data:products})
+}
+
 exports.getProductById = async(req,res,next) => {
         const product = await Product.findById(req.params.id);
         if(!product){
@@ -37,7 +48,7 @@ exports.uploadProductImage = async(req,res) =>{
     }
     product.image = productImage;
     await product.save();
-    return res.status(200).json({success:true,product:product});
+    return res.status(200).json({success:true});
 
 }
 
