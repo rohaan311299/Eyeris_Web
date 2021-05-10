@@ -6,9 +6,12 @@ const {authRequired,hasRoles} =require("../middleware/auth");
 const {getProductById,createProduct,updateProduct,uploadProductImage,updateProductImage,deleteProduct,} = require("../controllers/product");
 
 
-router.post("/createProduct",authRequired,hasRoles("admin"),asyncHandler(createProduct))
+router.post("/createProduct",authRequired("admin"),hasRoles("admin"),asyncHandler(createProduct))
 router.get("/:id",asyncHandler(getProductById))
-router.post("/updateProduct/:id",authRequired,hasRoles("admin"),asyncHandler(updateProduct))
-router.post("/uploadImage/:id",authRequired,hasRoles("admin"),upload.single("image"),asyncHandler(uploadProductImage))
+router.post("/updateProduct/:id",authRequired("admin"),hasRoles("admin"),asyncHandler(updateProduct))
+router.post("/uploadImage/:id",authRequired("admin"),hasRoles("admin"),upload.single("image"),asyncHandler(uploadProductImage))
+
+
+module.exports = router;
 
 

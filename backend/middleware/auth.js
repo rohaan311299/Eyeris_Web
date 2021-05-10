@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
  * Header format is
  * Authorization: Bearer token
  */
-const authRequired =(role="user")=>async (req, res, next) => {
+const authRequired =(role="user" || "admin")=>async (req, res, next) => {
     const header = req.header('Authorization');
     if (!header) {
         return res.status(401).json({
@@ -21,7 +21,7 @@ const authRequired =(role="user")=>async (req, res, next) => {
                 msg: 'Invalid token',
             });
         }
-        const user = role=='user'?await User.findOne({ _id: decoded.id }).select({password:0}): null
+        const user = role=='user' || "admin"?await User.findOne({ _id: decoded.id }).select({password:0}): null
         
         if(!user){
             return res.status(404).json(`${role} not found!!`)

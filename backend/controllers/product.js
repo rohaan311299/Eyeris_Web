@@ -1,6 +1,6 @@
 const Product = require('../models/Product')
 
-exports.getProductById = async(res,req,next) => {
+exports.getProductById = async(req,res,next) => {
         const product = await Product.findById(req.params.id);
         if(!product){
             return res.status(404).json({data:"No data"});
@@ -11,13 +11,12 @@ exports.getProductById = async(res,req,next) => {
         })
 }
 
-exports.createProduct = async(res,req,next) => {
-    const {name,quantity,description,category,price} = req.body;
-    
-    const product = await Product.create({name,quantity,description,category,price});
+exports.createProduct = async(req,res,next) => {
+    const product = await Product.create(req.body);
     res.status(201).json({
         success:true,
-        id:product._id
+        id:product._id,
+        data:product
     })
 }
 /**
@@ -44,7 +43,7 @@ exports.uploadProductImage = async(req,res) =>{
 
 
 
-exports.updateProduct = async(res,req,next) => {
+exports.updateProduct = async(req,res,next) => {
     const products = await Product.findById(req.params.id)
     if(!products){
         return res.status(404).json({data:"Id not found"})
@@ -82,7 +81,7 @@ exports.updateProductImage = async(req,res) =>{
 
 }
 
-exports.deleteProduct =async(res,req,next) => {
+exports.deleteProduct =async(req,res,next) => {
     const products = await Product.findById(req.params.id)
     if(!products){
         return res.status(404).json({data:"Id not found"})

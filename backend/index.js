@@ -11,6 +11,7 @@ const bodyParser = require("body-parser");
 // paths 
 const connectDB = require('./config/db');
 const user = require("./routes/auth");
+const product = require("./routes/product");
 
 
 
@@ -22,7 +23,9 @@ app.use(bodyParser.json())
 app.use(morgan('dev'));
 app.use(cookieParser());
 
-app.use("/api/v1/user",user)
+app.use("/api/v1/user",user);
+app.use("/api/v1/product",product)
+
 
 const server = app.listen(process.env.PORT, () => {
     console.log('App listening on port 5000!'.blue.bold);
