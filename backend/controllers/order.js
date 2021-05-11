@@ -3,6 +3,30 @@ const Product = require("../models/Product");
 const User = require("../models/User");
 
 // protected route
+// api/v1/orders/getAllOrders
+
+exports.getAllOrders = async(req,res,next) => {
+    const order = await Order.find()
+    if(!order){
+        return res.status(404).json({success:false,msg:"No orders"})
+    }
+
+    res.status(200).json({success:true,data:order})
+}
+
+
+exports.getPlacedOrderforAdmin = async(req,res,next) => {
+    console.log("Hi")
+    const orders = await Order.find({status:"initiated"})
+    if(!orders){
+        return res.status(200).json({success:true,msg:"No Placed Orders in the inventory"})
+    }
+
+    res.status(200).json({success:true,data:orders})
+}
+
+
+// protected route
 // /api/v1/orders/createOrder
 
 exports.createOrder = async(req,res)=>{
@@ -22,6 +46,20 @@ exports.createOrder = async(req,res)=>{
     userdata.orders.push(order._id);
     await userdata.save();
 
-    return res.status(201).json({msg:"Order created successfully",data:order})
+    return res.status(201).json({success:true,msg:"Order created successfully",data:order})
+}
+
+exports.AcceptOrder = async(req,res,next) => {
+    const order = await Order.findById(req.params.id)
+
+    if(!order){
+        return res.status(404).json({success:false,msg:"No such Order"})
+    }
+
+    order.status = "placed"
+    order.save();
+    res.status(200).json({success:true,data:order})
+
+
 }
 

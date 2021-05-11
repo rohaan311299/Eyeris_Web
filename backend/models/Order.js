@@ -13,7 +13,7 @@ const OrderSchema = new mongoose.Schema({
     }],
     status:{
         type:String,
-        enum:["initiated","placed"],
+        enum:["initiated","placed","canceled"],
         default:"initiated",
         required:true,
     },
