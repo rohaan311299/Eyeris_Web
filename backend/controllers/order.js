@@ -113,7 +113,7 @@ exports.updateOrder = async(res,req,next) => {
         return res.status(404).json({success:false,data:`No order with ${req.params.id}`})
     }
 
-    if(order.order.toString() != req.user._id.toString()){
+    if(order.user.toString() != req.user._id.toString()){
         return res.status(403).json({success:false,data:`Not authorised route`})
     }
 
