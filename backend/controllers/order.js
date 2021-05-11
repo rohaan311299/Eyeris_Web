@@ -78,4 +78,29 @@ exports.getMyOrders = async(req,res,netx) => {
     res.status(200).json({success:true,data:past_orders})
 }
 
+// protected route 
+// api/v1/deleteOrder/:id
+// to delete the order
+
+exports.cancelOrder =  async (req,res,next) => {
+    var order = await Order.findById(req.params.id)
+
+    if(!order){
+        return res.status(404).json({success:false,data:`No such order with id ${req.params.id}`})
+    }
+
+    if(order.user.toString()  !==  req.user._id.toString()){
+        return res.status(403).json({success:false,data:`Not authorised route`})
+    }
+
+    if(order.status == "placed"){
+        return res.status(403).json({success:false,data:`Request has been completed or rejected`})
+    }
+
+    order.status = "canceled";
+    await order.save();
+
+    res.status(200).json({success:false,data:`Order cancelled with id ${req.params.id}`})
+
+}
 

@@ -29,6 +29,7 @@ const authRequired =(role="user" || "admin")=>async (req, res, next) => {
         req.token = token;
         req.user = user;
         res.locals.user=user
+        console.log("Verification done")
         next();
     } catch (e) {
         return res.status(401).json({
