@@ -49,6 +49,9 @@ exports.createOrder = async(req,res)=>{
     return res.status(201).json({success:true,msg:"Order created successfully",data:order})
 }
 
+// protected route
+// /api/v1/orders/AcceptOrder/:id
+
 exports.AcceptOrder = async(req,res,next) => {
     const order = await Order.findById(req.params.id)
 
@@ -59,7 +62,20 @@ exports.AcceptOrder = async(req,res,next) => {
     order.status = "placed"
     order.save();
     res.status(200).json({success:true,data:order})
-
-
 }
+
+// protected route
+// /api/v1/orders/getMyOrders
+// provide jwt token
+
+exports.getMyOrders = async(req,res,netx) => {
+    orders = req.user.orders;
+    if(!orders){
+        return res.status(404).json({msg:"No orders"})
+    }
+    
+    past_orders = await Order.find({_id:orders})
+    res.status(200).json({success:true,data:past_orders})
+}
+
 
