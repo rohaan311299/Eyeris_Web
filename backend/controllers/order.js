@@ -25,6 +25,28 @@ exports.getPlacedOrderforAdmin = async(req,res,next) => {
     res.status(200).json({success:true,data:orders})
 }
 
+//protected route
+// api/v1/orders/getOrderById/:id
+
+exports.getOrderById = async(req,res,next) => {
+    const orderId = req.params.id;
+    if(!orderId){
+        return res.status(400).json({success:false,msg:"No order Id provided"})
+    }
+    const order = await Order.findById(orderId).populate("user");
+    console.log(order.user._id)
+    console.log(req.user._id)
+    if(order.user._id.toString() != req.user._id.toString() ){
+        return res.status(403).json({success:false,data:"Not allowed to acesss"})
+    }
+
+    if(!order){
+        return res.status(404).json({success:false,data:`No product with id ${req.params.id}`})
+    }
+    order.user = order.user.getPublicProfile();
+    res.status(200).json({success:true,data:order})
+}
+
 
 // protected route
 // /api/v1/orders/createOrder
@@ -76,6 +98,35 @@ exports.getMyOrders = async(req,res,netx) => {
     
     past_orders = await Order.find({_id:orders})
     res.status(200).json({success:true,data:past_orders})
+}
+
+
+// protected route 
+// api/v1/updateOrder/:id
+// to updateOrder the order
+
+
+exports.updateOrder = async(res,req,next) => {
+    var order = await Order.findById(req.params.id)
+
+    if(!order){
+        return res.status(404).json({success:false,data:`No order with ${req.params.id}`})
+    }
+
+    if(order.order.toString() != req.user._id.toString()){
+        return res.status(403).json({success:false,data:`Not authorised route`})
+    }
+
+    if(order.status == "placed" || "completed" || "canceled"){
+        return res.status(403).json({success:false,data:`Request ${req.params.id} cannot be modified`})
+    }
+    order = await Order.findByIdAndUpdate(req.user._id,req.body,{
+        new:true,
+        runValidators:true
+    })
+
+    res.status(200).json({success:true,data:order});
+
 }
 
 // protected route 
