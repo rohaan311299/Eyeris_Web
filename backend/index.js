@@ -48,7 +48,6 @@ const server = app.listen(process.env.PORT, () => {
     }
 
     if (err.name === 'MongoError') {
-        console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
         return res.status(400).json({err:err.keyPattern});
       }
     
