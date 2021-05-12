@@ -25,19 +25,22 @@ exports.register = async(req,res, next) => {
 // @route     POST /api/v1/auth/login
 // @access    Public
 exports.login = async(req, res, next) => {
-    console.log(req.body)
     const {email,password} = req.body;
     //Validate email and password 
     if (!email || !password){
-        return next(new ErrorResponse('Please provide an email and password',400));
+        return res.status(400).json({success:false,msg:'Please provide an email and password'})
     }
 
 
     // Check for user
     const user = await User.findOne({email}).select('+password');
+    console.log(user)
 
     if(!user){
-        return next(new ErrorResponse('Invalid Credentials',401));
+        return res.status(401).json({
+            success: false,
+            error: 'Invalid Credentials',
+          })
     }
     
     
@@ -134,4 +137,23 @@ exports.updateProfile = async (req, res) => {
     });
     return res.status(200).json(user.getPublicProfile());
   };
+
+exports.changePassworrd = async (req,res,next) => {
+    const {password,new_password} = req.body;
+
+    if (!password){
+        return res.status(400).json({success:false,msg:'Please provide password'})
+    }
+
+    const user = await User.findById(req.user._id).select('+password')
+    const isMatch = await user.matchPassword(password);
+    console.log(isMatch)
+    if(!isMatch){
+        return res.status(400).json({success:false,msg:"Incorrect Password"})
+    }
+    console.log("password matched")
+    user.password = new_password;
+    user.save();
+    res.status(200).json({success:true,data:user.getPublicProfile()})
+}
   
