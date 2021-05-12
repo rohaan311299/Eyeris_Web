@@ -86,6 +86,23 @@ exports.AcceptOrder = async(req,res,next) => {
     res.status(200).json({success:true,data:order})
 }
 
+
+// protected route
+// /api/v1/orders/AcceptOrder/:id
+
+exports.completeOrder = async(req,res,next) => {
+    const order = await Order.findById(req.params.id)
+
+    if(!order){
+        return res.status(404).json({success:false,msg:"No such Order"})
+    }
+
+    order.status = "completed"
+    order.save();
+    res.status(200).json({success:true,data:order})
+}
+
+
 // protected route
 // /api/v1/orders/getMyOrders
 // provide jwt token
