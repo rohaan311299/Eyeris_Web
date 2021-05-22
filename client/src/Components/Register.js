@@ -12,7 +12,7 @@ const Register = (props) => {
     role: '',
     password: '',
   });
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (currentUser) {
@@ -52,6 +52,7 @@ const Register = (props) => {
       .then((result) => {
         console.log(result);
         localStorage.setItem('eyerisToken', result.token);
+        setCurrentUser(result);
       })
       .catch((error) => console.log('error', error));
   }

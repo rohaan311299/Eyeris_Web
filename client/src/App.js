@@ -6,7 +6,7 @@ import Login from './Components/Login';
 import Profile from './Components/Profile';
 import Register from './Components/Register';
 import Products from './Components/Products';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './auth/PrivateRoutes';
 import AuthProvider from './auth/AuthContext';
 
@@ -15,14 +15,14 @@ function App() {
     <Router>
       <AuthProvider>
         <Header />
-        <main>
+        <Switch>
           <Container>
-            <Route path="/login" component={Login} />
-            <PrivateRoute path="/profile" component={Profile} />
-            <Route path="/register" component={Register} />
-            <PrivateRoute path="/product" component={Products} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <PrivateRoute exact path="/" component={Products} />
+            <PrivateRoute exact path="/profile" component={Profile} />
           </Container>
-        </main>
+        </Switch>
       </AuthProvider>
     </Router>
   );

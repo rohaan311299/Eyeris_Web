@@ -10,13 +10,13 @@ const Login = (props) => {
     password: '',
   });
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (currentUser) {
       props.history.push('/');
     }
-  }, []);
+  }, [currentUser]);
 
   function handleChange(event) {
     const val = event.target.value;
@@ -27,7 +27,35 @@ const Login = (props) => {
     // console.log(userData);
   }
 
-  function loginHandler() {}
+  function loginHandler() {
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify({
+      email: userData.email,
+      password: userData.password,
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch('http://localhost:5000/api/v1/user/login', requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+        result = JSON.parse(result);
+        if (result) {
+          localStorage.setItem('eyerisToken', result.token);
+          setCurrentUser(result.sendUser);
+          console.log(result.sendUser);
+        }
+      })
+      .catch((error) => console.log('error', error));
+  }
 
   return (
     <div>

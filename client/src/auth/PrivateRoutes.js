@@ -14,30 +14,18 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
     }
   }, [currentUser]);
 
-  const Loader = () => {
-    return (
-      <div className={styles.loading}>
-        <CircularProgress />
-      </div>
-    );
-  };
-
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Route
-          {...rest}
-          render={(routeProps) =>
-            !!currentUser ? (
-              <RouteComponent {...routeProps} />
-            ) : (
-              <Redirect to={'/SignIn'} />
-            )
-          }
-        />
-      )}
+      <Route
+        {...rest}
+        render={(routeProps) =>
+          !!currentUser ? (
+            <RouteComponent {...routeProps} />
+          ) : (
+            <Redirect to={'/login'} />
+          )
+        }
+      />
     </>
   );
 };

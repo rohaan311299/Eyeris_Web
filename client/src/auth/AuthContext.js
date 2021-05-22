@@ -13,8 +13,6 @@ export const AuthProvider = ({ children }) => {
       myHeaders.append('Authorization', 'Bearer ' + token);
       myHeaders.append('Cookie', 'token=' + token);
 
-      var raw = '';
-
       var requestOptions = {
         method: 'GET',
         headers: myHeaders,
@@ -42,6 +40,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         currentUser: currentUser,
+        setCurrentUser: setCurrentUser,
       }}
     >
       {children}
