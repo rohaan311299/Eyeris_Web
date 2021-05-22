@@ -23,12 +23,15 @@ export const AuthProvider = ({ children }) => {
         .then((response) => response.text())
         .then((result) => {
           console.log(result);
-          if (result._id !== undefined || result._id !== null) {
+          if (result._id !== undefined && result._id !== null && result._id) {
             console.log('Redirect to home page (logged in)');
             // setIsLoggedIn(true);
             setCurrentUser(result);
+          } else {
+            setCurrentUser(null);
+            console.log('No user');
+            localStorage.removeItem('eyerisToken');
           }
-          console.log(`No user`, token);
         })
         .catch((error) => console.log('error', error));
     } else {

@@ -1,8 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import TextField from '@material-ui/core/TextField';
 import './Register.css';
 import { AuthContext } from '../auth/AuthContext';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Register = (props) => {
   const [userData, setUserData] = useState({
@@ -12,6 +19,8 @@ const Register = (props) => {
     role: '',
     password: '',
   });
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   useEffect(() => {
@@ -51,11 +60,26 @@ const Register = (props) => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        localStorage.setItem('eyerisToken', result.token);
-        setCurrentUser(result);
+        if (result.success) {
+          localStorage.setItem('eyerisToken', result.token);
+          setCurrentUser(result);
+        }
       })
       .catch((error) => console.log('error', error));
   }
+
+  // Snackbar
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <div>
       <TextField
@@ -88,6 +112,11 @@ const Register = (props) => {
         name="password"
       />
       <button onClick={registerHandler}>Register</button>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
