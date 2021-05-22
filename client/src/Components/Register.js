@@ -1,37 +1,94 @@
-import React from 'react';
-import {Form, Button, Row, Col} from "react-bootstrap";
+import React, { useState, useContext, useEffect } from 'react';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import TextField from '@material-ui/core/TextField';
+import './Register.css';
+import { AuthContext } from '../auth/AuthContext';
 
-const Register = () => {
-    return (
-        <div>
-            <Form className="py-3">
-                <Row>
-                    <Col>
-                        <Form.Group controlId="formFirstName">
-                            <Form.Label>First Name</Form.Label>
-                            <Form.Control type="text" placeholder="First Name" />
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Form.Group controlId="formPhoneNumber">
-                            <Form.Label>Contact Number</Form.Label>
-                            <Form.Control type="number" placeholder="Contact Number" />
-                        </Form.Group>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                </Form.Group>
+const Register = (props) => {
+  const [userData, setUserData] = useState({
+    fullname: '',
+    number: '',
+    email: '',
+    role: '',
+    password: '',
+  });
+  const { currentUser } = useContext(AuthContext);
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-                <Button variant="primary" type="submit" className="my-3">
-                    Submit
-                </Button>
-            </Form>
-        </div>
-    )
-}
+  useEffect(() => {
+    if (currentUser) {
+      props.history.push('/');
+    }
+  }, []);
 
-export default Register
+  function handleChange(event) {
+    const val = event.target.value;
+    setUserData({
+      ...userData,
+      [event.target.name]: val,
+    });
+    // console.log(userData);
+  }
+
+  function registerHandler() {
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    console.log(userData);
+    var raw = JSON.stringify({
+      name: userData.fullname,
+      mobile: userData.number,
+      email: userData.email,
+      role: 'user',
+      password: userData.password,
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+    };
+    console.log(raw, requestOptions);
+    fetch('http://localhost:5000/api/v1/user/register', requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        localStorage.setItem('eyerisToken', result.token);
+      })
+      .catch((error) => console.log('error', error));
+  }
+  return (
+    <div>
+      <TextField
+        id="standard-basic"
+        label="Name"
+        onChange={handleChange}
+        value={userData.fullname}
+        name="fullname"
+      />
+      <TextField
+        id="standard-basic"
+        label="Email"
+        onChange={handleChange}
+        value={userData.email}
+        name="email"
+      />
+      <TextField
+        id="standard-basic"
+        label="Number"
+        onChange={handleChange}
+        value={userData.number}
+        name="number"
+      />
+      <TextField
+        id="standard-basic"
+        label="Password"
+        type="password"
+        onChange={handleChange}
+        value={userData.password}
+        name="password"
+      />
+      <button onClick={registerHandler}>Register</button>
+    </div>
+  );
+};
+
+export default Register;

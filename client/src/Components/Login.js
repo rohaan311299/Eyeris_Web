@@ -1,29 +1,54 @@
-import React from 'react';
-import {Form,Button} from  "react-bootstrap";
+import React, { useEffect, useState, useContext } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import TextField from '@material-ui/core/TextField';
+import { AuthContext } from '../auth/AuthContext';
 
-const Login = () => {
-    return (
-        <div>
-            <Form>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                    <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                    </Form.Text>
-                </Form.Group>
+const Login = (props) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({
+    email: '',
+    password: '',
+  });
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-                <Button variant="primary" type="submit" className="my-2">
-                    Submit
-                </Button>
-            </Form>
-            
-        </div>
-    )
-}
+  const { currentUser } = useContext(AuthContext);
 
-export default Login
+  useEffect(() => {
+    if (currentUser) {
+      props.history.push('/');
+    }
+  }, []);
+
+  function handleChange(event) {
+    const val = event.target.value;
+    setUserData({
+      ...userData,
+      [event.target.name]: val,
+    });
+    // console.log(userData);
+  }
+
+  function loginHandler() {}
+
+  return (
+    <div>
+      <TextField
+        id="standard-basic"
+        label="Email"
+        onChange={handleChange}
+        value={userData.email}
+        name="email"
+      />
+      <TextField
+        id="standard-basic"
+        label="Password"
+        type="password"
+        onChange={handleChange}
+        value={userData.password}
+        name="password"
+      />
+      <button onClick={loginHandler}>Register</button>
+    </div>
+  );
+};
+
+export default Login;
