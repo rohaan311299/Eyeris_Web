@@ -6,16 +6,10 @@ const Register = () => {
         <div>
             <Form className="py-3">
                 <Row>
-                    <Col sm={12} md={6}>
+                    <Col>
                         <Form.Group controlId="formFirstName">
                             <Form.Label>First Name</Form.Label>
                             <Form.Control type="text" placeholder="First Name" />
-                        </Form.Group>
-                    </Col>
-                    <Col sm={12} md={6}>
-                        <Form.Group controlId="formLastName">
-                            <Form.Label>Last Name</Form.Label>
-                            <Form.Control type="text" placeholder="Last Name" />
                         </Form.Group>
                     </Col>
                 </Row>
