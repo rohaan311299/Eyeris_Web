@@ -7,6 +7,8 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const mongoSanitize = require('express-mongo-sanitize');
+
 
 
 // paths 
@@ -25,6 +27,7 @@ app.use(bodyParser.json())
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(cors());
+app.use(mongoSanitize());
 
 app.use("/api/v1/user",user);
 app.use("/api/v1/product",product)
