@@ -17,7 +17,9 @@ const Login = (props) => {
     password: '',
   });
   const [open, setOpen] = React.useState(false);
-  const [message, setMessage] = React.useState('');
+  const [message, setMessage] = React.useState(
+    'There was some error, Please try again and check your credentials!'
+  );
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   useEffect(() => {
@@ -55,13 +57,15 @@ const Login = (props) => {
       .then((response) => response.text())
       .then((result) => {
         result = JSON.parse(result);
-        console.log(result.success);
+        console.log(result, result.success);
         if (result.success) {
           localStorage.setItem('eyerisToken', result.token);
           setCurrentUser(result.sendUser);
           console.log(result.sendUser);
         } else {
-          setMessage(result.error);
+          if (result.error) {
+            setMessage(result.error);
+          }
           setOpen(true);
         }
       })
@@ -102,8 +106,8 @@ const Login = (props) => {
         value={userData.password}
         name="password"
       />
-      <button onClick={loginHandler}>Register</button>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <button onClick={loginHandler}>Login</button>
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
           {message}
         </Alert>

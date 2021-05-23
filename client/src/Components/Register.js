@@ -16,11 +16,12 @@ const Register = (props) => {
     fullname: '',
     number: '',
     email: '',
-    role: '',
     password: '',
   });
   const [open, setOpen] = React.useState(false);
-  const [message, setMessage] = React.useState('');
+  const [message, setMessage] = React.useState(
+    'There was some error while registering, please try again with valid fields'
+  );
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   useEffect(() => {
@@ -39,33 +40,49 @@ const Register = (props) => {
   }
 
   function registerHandler() {
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    console.log(userData);
-    var raw = JSON.stringify({
-      name: userData.fullname,
-      mobile: userData.number,
-      email: userData.email,
-      role: 'user',
-      password: userData.password,
+    let message = '';
+    Object.keys(userData).map((i) => {
+      if (userData[i] === '') {
+        console.log(i);
+        let field = i;
+        field.charAt(0).toUpperCase();
+        message += field + ', ';
+      }
     });
+    if (message !== '') {
+      message = message.slice(0, -2);
+      message += " can't be empty!";
+      setOpen(true);
+      setMessage(message);
+    } else {
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      console.log(userData);
+      var raw = JSON.stringify({
+        name: userData.fullname,
+        mobile: userData.number,
+        email: userData.email,
+        role: 'user',
+        password: userData.password,
+      });
 
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-    };
-    console.log(raw, requestOptions);
-    fetch('http://localhost:5000/api/v1/user/register', requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        if (result.success) {
-          localStorage.setItem('eyerisToken', result.token);
-          setCurrentUser(result);
-        }
-      })
-      .catch((error) => console.log('error', error));
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+      };
+      console.log(raw, requestOptions);
+      fetch('http://localhost:5000/api/v1/user/register', requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          if (result.success) {
+            localStorage.setItem('eyerisToken', result.token);
+            setCurrentUser(result);
+          }
+        })
+        .catch((error) => console.log('error', error));
+    }
   }
 
   // Snackbar
@@ -83,34 +100,39 @@ const Register = (props) => {
   return (
     <div>
       <TextField
-        id="standard-basic"
+        required
+        id="standard-required"
         label="Name"
         onChange={handleChange}
         value={userData.fullname}
         name="fullname"
       />
       <TextField
-        id="standard-basic"
+        required
+        id="standard-required"
         label="Email"
         onChange={handleChange}
         value={userData.email}
         name="email"
       />
       <TextField
-        id="standard-basic"
+        required
+        id="standard-required"
         label="Number"
         onChange={handleChange}
         value={userData.number}
         name="number"
       />
       <TextField
-        id="standard-basic"
+        required
+        id="standard-required"
         label="Password"
         type="password"
         onChange={handleChange}
         value={userData.password}
         name="password"
       />
+      <br></br>
       <button onClick={registerHandler}>Register</button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
