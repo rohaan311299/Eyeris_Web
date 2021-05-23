@@ -45,7 +45,7 @@ const Register = (props) => {
       if (userData[i] === '') {
         console.log(i);
         let field = i;
-        field.charAt(0).toUpperCase();
+        field = field.replace(field.charAt(0), field.charAt(0).toUpperCase());
         message += field + ', ';
       }
     });
@@ -79,6 +79,20 @@ const Register = (props) => {
           if (result.success) {
             localStorage.setItem('eyerisToken', result.token);
             setCurrentUser(result);
+          } else if (result.err) {
+            console.log(result.err);
+            let errorfield = Object.keys(result.err);
+            errorfield = errorfield[0].replace(
+              errorfield[0].charAt(0),
+              errorfield[0].charAt(0).toUpperCase()
+            );
+            let message = errorfield + ' already exists!';
+            setOpen(true);
+            setMessage(message);
+          } else if (result.password) {
+            let message = 'Password must be greater than 6 characters';
+            setOpen(true);
+            setMessage(message);
           }
         })
         .catch((error) => console.log('error', error));
