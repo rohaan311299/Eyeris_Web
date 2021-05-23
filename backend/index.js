@@ -6,6 +6,7 @@ const colors = require('colors');
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 
 // paths 
@@ -23,6 +24,7 @@ app.use(bodyParser.json())
 
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/api/v1/user",user);
 app.use("/api/v1/product",product)

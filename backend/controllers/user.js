@@ -39,14 +39,14 @@ exports.login = async(req, res, next) => {
     if(!user){
         return res.status(401).json({
             success: false,
-            error: 'Invalid Credentials',
+            message: 'Invalid Credentials',
           })
     }
     
     
     const isMatch = await user.matchPassword(password);
     if (!isMatch){
-        return next(new ErrorResponse('Invalid Credentials',401));  
+        return res.status(400).json({success:false,message:"Incorrect Password"});  
     }
 
     sendTokenResponse(user,200,res)
