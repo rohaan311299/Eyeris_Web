@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet")
 const mongoSanitize = require('express-mongo-sanitize');
+const xss = require("xss-clean");
 
 
 
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use(mongoSanitize());
 app.use(helmet);
+app.use(xss());
 
 app.use("/api/v1/user",user);
 app.use("/api/v1/product",product)
