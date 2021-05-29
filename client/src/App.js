@@ -9,6 +9,7 @@ import Products from './Components/Products';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './auth/PrivateRoutes';
 import AuthProvider from './auth/AuthContext';
+import Product from "./Components/Product";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <PrivateRoute exact path="/" component={Products} />
+            <Route exact path="/product/:id" component={Product}/>
             <PrivateRoute exact path="/profile" component={Profile} />
           </Container>
         </Switch>
