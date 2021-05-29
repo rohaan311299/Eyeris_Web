@@ -1,10 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {Row, Col, ListGroup, Form, Button,Card} from "react-bootstrap";
+import {Row, Col, Form, Button,Card} from "react-bootstrap";
 
-const product={
-      img:"https://miro.medium.com/max/3150/1*TQw2_wmdWlXYXVSsz45Kdw.jpeg"
-    }
 
 const Product = ({match}) => {
 
@@ -16,26 +13,6 @@ const Product = ({match}) => {
                     <img src="https://miro.medium.com/max/3150/1*TQw2_wmdWlXYXVSsz45Kdw.jpeg" style={{width:"80%", height:"auto"}} />
                 </Col>
                 <Col sm={12} md={6}>
-                    {/* <ListGroup variant="flush">
-                    <ListGroup.Item><strong>Product Name</strong></ListGroup.Item>
-                    <ListGroup.Item>Price: Rs. 100</ListGroup.Item>
-                    <ListGroup.Item>Description: Product Description</ListGroup.Item>
-                    <ListGroup.Item>Category: Product Category</ListGroup.Item>
-                    <ListGroup.Item>product in Stock?</ListGroup.Item>
-                    <ListGroup.Item>
-                        Qty: 
-                        <Form.Group>
-                        <Form.Control as="select" size="md">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </Form.Control>
-                        <br />
-                        </Form.Group>
-                    </ListGroup.Item>
-                    </ListGroup> */}
                     <Card>
                         <Card.Body>
                             <Card.Title>Product Name</Card.Title>
