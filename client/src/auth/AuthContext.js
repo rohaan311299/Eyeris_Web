@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
       fetch('http://localhost:5000/api/v1/user/me', requestOptions)
         .then((response) => response.text())
         .then((result) => {
+          result = JSON.parse(result);
           console.log(result);
           if (result._id !== undefined && result._id !== null && result._id) {
             console.log('Redirect to home page (logged in)');
