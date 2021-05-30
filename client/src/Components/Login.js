@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../auth/AuthContext';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import {Form, Button} from "react-bootstrap";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -91,27 +92,39 @@ const Login = (props) => {
 
   return (
     <div>
-      <TextField
-        id="standard-basic"
-        label="Email"
-        onChange={handleChange}
-        value={userData.email}
-        name="email"
-      />
-      <TextField
-        id="standard-basic"
-        label="Password"
-        type="password"
-        onChange={handleChange}
-        value={userData.password}
-        name="password"
-      />
-      <button onClick={loginHandler}>Login</button>
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          {message}
-        </Alert>
-      </Snackbar>
+
+      <Form className="mt-3">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control 
+            id="standard-basic"
+            label="Email"
+            placeholder="Enter Email"
+            onChange={handleChange}
+            value={userData.email}
+            name="email"
+           />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            id="standard-basic"
+            label="Password"
+            type="password"
+            placeholder="Enter Password"
+            onChange={handleChange}
+            value={userData.password}
+            name="password"
+          />
+        </Form.Group>
+        <Button variant="primary" onClick={loginHandler}>Login</Button>
+          <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error">
+              {message}
+            </Alert>
+          </Snackbar>
+      </Form>
     </div>
   );
 };

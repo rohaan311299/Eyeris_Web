@@ -2,10 +2,11 @@ import React, { useState, useContext, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import './Register.css';
 import { AuthContext } from '../auth/AuthContext';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import {Form, Button} from "react-bootstrap";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -113,46 +114,67 @@ const Register = (props) => {
 
   return (
     <div>
-      <TextField
-        required
-        id="standard-required"
-        label="Name"
-        onChange={handleChange}
-        value={userData.fullname}
-        name="fullname"
-      />
-      <TextField
-        required
-        id="standard-required"
-        label="Email"
-        onChange={handleChange}
-        value={userData.email}
-        name="email"
-      />
-      <TextField
-        required
-        id="standard-required"
-        label="Number"
-        onChange={handleChange}
-        value={userData.number}
-        name="number"
-      />
-      <TextField
-        required
-        id="standard-required"
-        label="Password"
-        type="password"
-        onChange={handleChange}
-        value={userData.password}
-        name="password"
-      />
-      <br></br>
-      <button onClick={registerHandler}>Register</button>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          {message}
-        </Alert>
-      </Snackbar>
+      <Form className="mt-3">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Name</Form.Label>
+          <Form.Control 
+            required
+            id="standard-required"
+            placeholder="Enter Full Name"
+            label="Name"
+            onChange={handleChange}
+            value={userData.fullname}
+            name="fullname"
+           />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control
+            required
+            id="standard-required"
+            label="Email"
+            onChange={handleChange}
+            value={userData.email}
+            name="email"
+            placeholder="Enter your Email Address"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control
+            required
+            id="standard-required"
+            label="Number"
+            onChange={handleChange}
+            value={userData.number}
+            name="number"
+            placeholder="Enter your Phone Number"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            required
+            id="standard-required"
+            label="Password"
+            type="password"
+            onChange={handleChange}
+            value={userData.password}
+            name="password"
+            placeholder="Enter your desired Password"
+          />
+        </Form.Group>
+
+        <Button variant="primary" onClick={registerHandler}>Register</Button>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error">
+            {message}
+          </Alert>
+        </Snackbar>
+      </Form>
     </div>
   );
 };
