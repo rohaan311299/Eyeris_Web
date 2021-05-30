@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
         .then((result) => {
           result = JSON.parse(result);
           console.log(result);
+          result['token'] = token;
           if (result._id !== undefined && result._id !== null && result._id) {
             console.log('Redirect to home page (logged in)');
             // setIsLoggedIn(true);

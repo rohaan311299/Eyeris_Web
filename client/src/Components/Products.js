@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../auth/AuthContext';
 import { Card, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import products from './data';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   useEffect(() => {
+    const token = currentUser.token
+      ? currentUser.token
+      : localStorage.getItem('eyerisToken');
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append(
-      'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOThkZjQ4NjM5Y2U1MWQ0MDljNWVjYiIsImlhdCI6MTYyMDYzMTM2OSwiZXhwIjoxNjIzMjIzMzY5fQ.BasuScksMkpGl_oLXZTkjl7Vr8pxgk9RgwT3o67W7ZI'
-    );
-    myHeaders.append(
-      'Cookie',
-      'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYTk0NTQzOTdlMTJkMjlmMDVmOWQ3NCIsImlhdCI6MTYyMjM3MDA0NCwiZXhwIjoxNjI0OTYyMDQ0fQ.0PjBR5vi3B7GKf12-EdZhppyunTJlXOHpvWWBSeNk0U'
-    );
+    myHeaders.append('Authorization', 'Bearer ' + token);
+    myHeaders.append('Cookie', 'token=' + token);
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
@@ -32,7 +31,7 @@ const Products = () => {
       })
       .catch((error) => console.log('error', error));
   }, []);
-  
+
   return (
     <div>
       <h3>Our Products:</h3>

@@ -1,31 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../auth/AuthContext';
 import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
 const Product = (props) => {
   const [item, setItem] = useState({});
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+
   useEffect(() => {
-    let productId = console.log(props.match.params.id);
+    let productId = props.match.params.id;
+    console.log(productId, currentUser);
+    const token = currentUser.token
+      ? currentUser.token
+      : localStorage.getItem('eyerisToken');
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append(
-      'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOThkZjQ4NjM5Y2U1MWQ0MDljNWVjYiIsImlhdCI6MTYyMDYzMTM2OSwiZXhwIjoxNjIzMjIzMzY5fQ.BasuScksMkpGl_oLXZTkjl7Vr8pxgk9RgwT3o67W7ZI'
-    );
-    myHeaders.append(
-      'Cookie',
-      'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYTk0NTQzOTdlMTJkMjlmMDVmOWQ3NCIsImlhdCI6MTYyMjM3MDA0NCwiZXhwIjoxNjI0OTYyMDQ0fQ.0PjBR5vi3B7GKf12-EdZhppyunTJlXOHpvWWBSeNk0U'
-    );
+    myHeaders.append('Authorization', 'Bearer ' + token);
+    myHeaders.append('Cookie', 'token=' + token);
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
       redirect: 'follow',
     };
 
-    fetch(
-      'http://localhost:5000/api/v1/product/6099836ff44d724af82ba959',
-      requestOptions
-    )
+    fetch('http://localhost:5000/api/v1/product/' + productId, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         result = JSON.parse(result);
@@ -36,7 +34,7 @@ const Product = (props) => {
   }, []);
   return (
     <>
-      <Link className="btn btn-dark my-3" to="/products">
+      <Link className="btn btn-dark my-3" to="/">
         Go Back
       </Link>
       <Row className="pt-3">
