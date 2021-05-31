@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
-import {Form, Button} from "react-bootstrap";
+import { Form, Button } from 'react-bootstrap';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -36,6 +36,12 @@ const Login = (props) => {
       [event.target.name]: val,
     });
     // console.log(userData);
+  }
+
+  function keyPressed(event) {
+    if (event.key === 'Enter') {
+      loginHandler();
+    }
   }
 
   function loginHandler() {
@@ -92,18 +98,18 @@ const Login = (props) => {
 
   return (
     <div>
-
       <Form className="mt-3">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control 
+          <Form.Control
             id="standard-basic"
             label="Email"
             placeholder="Enter Email"
             onChange={handleChange}
             value={userData.email}
+            onKeyPress={keyPressed}
             name="email"
-           />
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -114,16 +120,19 @@ const Login = (props) => {
             type="password"
             placeholder="Enter Password"
             onChange={handleChange}
+            onKeyPress={keyPressed}
             value={userData.password}
             name="password"
           />
         </Form.Group>
-        <Button variant="primary" onClick={loginHandler}>Login</Button>
-          <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="error">
-              {message}
-            </Alert>
-          </Snackbar>
+        <Button variant="primary" onClick={loginHandler}>
+          Login
+        </Button>
+        <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error">
+            {message}
+          </Alert>
+        </Snackbar>
       </Form>
     </div>
   );
