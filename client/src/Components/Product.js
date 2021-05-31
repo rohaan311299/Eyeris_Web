@@ -52,7 +52,7 @@ const Product = (props) => {
     };
     console.log(itemAdded);
     let orders = currentUser.orders;
-    orders.append(item);
+    orders.push(itemAdded);
     setCurrentUser({ ...currentUser, orders: orders });
   }
 
