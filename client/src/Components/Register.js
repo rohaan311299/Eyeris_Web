@@ -6,7 +6,7 @@ import { AuthContext } from '../auth/AuthContext';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
-import {Form, Button} from "react-bootstrap";
+import { Form, Button } from 'react-bootstrap';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -38,6 +38,12 @@ const Register = (props) => {
       [event.target.name]: val,
     });
     // console.log(userData);
+  }
+
+  function keyPressed(event) {
+    if (event.key === 'Enter') {
+      registerHandler();
+    }
   }
 
   function registerHandler() {
@@ -117,15 +123,16 @@ const Register = (props) => {
       <Form className="mt-3">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Name</Form.Label>
-          <Form.Control 
+          <Form.Control
             required
             id="standard-required"
             placeholder="Enter Full Name"
             label="Name"
             onChange={handleChange}
+            onKeyPress={keyPressed}
             value={userData.fullname}
             name="fullname"
-           />
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -135,6 +142,7 @@ const Register = (props) => {
             id="standard-required"
             label="Email"
             onChange={handleChange}
+            onKeyPress={keyPressed}
             value={userData.email}
             name="email"
             placeholder="Enter your Email Address"
@@ -148,6 +156,7 @@ const Register = (props) => {
             id="standard-required"
             label="Number"
             onChange={handleChange}
+            onKeyPress={keyPressed}
             value={userData.number}
             name="number"
             placeholder="Enter your Phone Number"
@@ -162,13 +171,16 @@ const Register = (props) => {
             label="Password"
             type="password"
             onChange={handleChange}
+            onKeyPress={keyPressed}
             value={userData.password}
             name="password"
             placeholder="Enter your desired Password"
           />
         </Form.Group>
 
-        <Button variant="primary" onClick={registerHandler}>Register</Button>
+        <Button variant="primary" onClick={registerHandler}>
+          Register
+        </Button>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">
             {message}

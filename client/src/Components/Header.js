@@ -21,8 +21,8 @@ const Header = () => {
             <Navbar.Brand>Eyeris</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
+          <Navbar.Collapse id="basic-navbar-nav" class="justify-content-end">
+            <Nav className="ml-auto justify-content-end">
               {!currentUser ? (
                 <LinkContainer to="/login">
                   <Nav.Link>
@@ -35,16 +35,21 @@ const Header = () => {
                 </Nav.Link>
               )}
 
-              <LinkContainer to="/profile">
-                <Nav.Link>
-                  <i className="fas fa-user-circle"></i> Profile
-                </Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/register">
-                <Nav.Link>
-                  <i className="fas fa-user-plus"></i> Register
-                </Nav.Link>
-              </LinkContainer>
+              {!currentUser ? null : (
+                <LinkContainer to="/profile">
+                  <Nav.Link onClick={logoutHandler}>
+                    <i className="fas fa-user-circle"></i> Profile
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+
+              {!currentUser ? (
+                <LinkContainer to="/register">
+                  <Nav.Link>
+                    <i className="fas fa-user-plus"></i> Sign Up
+                  </Nav.Link>
+                </LinkContainer>
+              ) : null}
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../auth/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
 const Product = (props) => {
   const [item, setItem] = useState({});
   const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     let productId = props.match.params.id;
     console.log(productId, currentUser);
-    const token = currentUser.token
+    const token = currentUser
       ? currentUser.token
       : localStorage.getItem('eyerisToken');
     var myHeaders = new Headers();
@@ -28,10 +29,33 @@ const Product = (props) => {
       .then((result) => {
         result = JSON.parse(result);
         setItem(result.data);
+        if (result.data === undefined) {
+          <Redirect to={'/products'} />;
+        }
         console.log(result.data);
       })
       .catch((error) => console.log('error', error));
   }, []);
+
+  function handleChange(event) {
+    setQuantity(event.target.value);
+    console.log(quantity);
+  }
+
+  function addToCart() {
+    let itemAdded = {
+      id: item._id,
+      name: item.name,
+      category: item.category,
+      quantity: quantity,
+      price: quantity * item.price,
+    };
+    console.log(itemAdded);
+    let orders = currentUser.orders;
+    orders.append(item);
+    setCurrentUser({ ...currentUser, orders: orders });
+  }
+
   return (
     <>
       <Link className="btn btn-dark my-3" to="/">
@@ -70,7 +94,7 @@ const Product = (props) => {
                 <Col>Qty:</Col>
                 <Col>
                   <Form.Group>
-                    <Form.Control as="select" size="md">
+                    <Form.Control as="select" size="md" onChange={handleChange}>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -82,7 +106,7 @@ const Product = (props) => {
               </Row>
             </Card.Body>
           </Card>
-          <Button variant="warning" className="mt-3">
+          <Button variant="warning" className="mt-3" onClick={addToCart}>
             <i className="fas fa-shopping-cart"></i> Add To Cart
           </Button>
         </Col>
