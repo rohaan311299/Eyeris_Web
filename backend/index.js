@@ -7,6 +7,13 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+<<<<<<< HEAD
+=======
+const helmet = require("helmet")
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require("xss-clean");
+
+>>>>>>> 02db9fe202d9d38302c2ddc37b4ec34b6631bf9c
 
 
 // paths 
@@ -25,6 +32,12 @@ app.use(bodyParser.json())
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(cors());
+<<<<<<< HEAD
+=======
+app.use(mongoSanitize());
+app.use(helmet());
+app.use(xss());
+>>>>>>> 02db9fe202d9d38302c2ddc37b4ec34b6631bf9c
 
 app.use("/api/v1/user",user);
 app.use("/api/v1/product",product)
