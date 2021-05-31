@@ -42,7 +42,6 @@ const Header = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-
               {!currentUser ? (
                 <LinkContainer to="/register">
                   <Nav.Link>
