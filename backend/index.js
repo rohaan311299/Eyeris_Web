@@ -30,7 +30,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(cors());
 app.use(mongoSanitize());
-app.use(helmet);
+app.use(helmet());
 app.use(xss());
 
 app.use("/api/v1/user",user);
