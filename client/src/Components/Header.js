@@ -37,7 +37,7 @@ const Header = () => {
 
               {!currentUser ? null : (
                 <LinkContainer to="/profile">
-                  <Nav.Link onClick={logoutHandler}>
+                  <Nav.Link>
                     <i className="fas fa-user-circle"></i> Profile
                   </Nav.Link>
                 </LinkContainer>
