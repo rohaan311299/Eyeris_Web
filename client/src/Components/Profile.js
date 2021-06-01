@@ -15,23 +15,22 @@ const Profile = () => {
     <div>
       <div className="container">
         <Row className="mt-3">
-          <Col sm={12} md={6}>
+          <Col sm={12} md={4}>
             <img
-              style={{ height: '75%', width: 'auto' }}
+              style={{ height: '50%', width: 'auto' }}
               src="https://miro.medium.com/max/3150/1*TQw2_wmdWlXYXVSsz45Kdw.jpeg"
             />
           </Col>
-          <Col sm={12} md={6}>
-            <h1>Rohan Kacheria</h1>
-
+          <Col sm={12} md={8}>
+            <h1>{currentUser.name}</h1>
             <h4>Your Cart Items:</h4>
             <ListGroup>
               {orders.map((item) => {
                 console.log(item);
                 return (
                   <ListGroup.Item>
-                    {item.name} ===> {item.quantity} ===> {item.price}
-                    {'===> '}
+                    {item.name} === {item.quantity} === {item.price}
+                    ===
                     <i class="fas fa-trash"></i>
                   </ListGroup.Item>
                 );
