@@ -32,6 +32,13 @@ const UserSchema = new mongoose.Schema({
         unique:true,
         required:[true,"Plase add your number"]
     },
+    cart:[{
+        productid:{
+            ref:"Product",
+            type:mongoose.Schema.Types.ObjectId
+        },
+        quantity:Number,
+    }],
     resetPasswordExpire:Date,
     orders:[{
         type:mongoose.Schema.Types.ObjectId,
