@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+
+
 const UserSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -32,10 +34,19 @@ const UserSchema = new mongoose.Schema({
         unique:true,
         required:[true,"Plase add your number"]
     },
+    cart:[{
+        _id:false,
+        product:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref : "Product"
+        },
+        quantity:Number,
+        price:Number
+    }],
     resetPasswordExpire:Date,
     orders:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref : "Order"
+            type:mongoose.Schema.Types.ObjectId,
+            ref : "Order"
     }],
     profileImage:{
         contentType:String,
