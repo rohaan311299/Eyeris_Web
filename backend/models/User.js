@@ -38,6 +38,7 @@ const UserSchema = new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId
         },
         quantity:Number,
+        price:Number
     }],
     resetPasswordExpire:Date,
     orders:[{
