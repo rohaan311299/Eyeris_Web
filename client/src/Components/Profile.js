@@ -36,18 +36,6 @@ const Profile = () => {
                   </ListGroup.Item>
                 );
               })}
-              {/* <ListGroup.Item>
-                Item 2 <i class="fas fa-trash"></i>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Item 3 <i class="fas fa-trash"></i>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Item 4 <i class="fas fa-trash"></i>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Item 5 <i class="fas fa-trash"></i>
-              </ListGroup.Item> */}
             </ListGroup>
 
             <Row>
