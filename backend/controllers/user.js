@@ -176,7 +176,7 @@ exports.deleteCart = async(req,res,next) => {
         return res.status(404).json({success:false,msg:"User not found"})
     }
     
-    user.cart = null;
+    user.cart = [];
     user.save();
     res.status(200).json({success:true,data:user})
 }
