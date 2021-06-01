@@ -74,18 +74,18 @@ const Product = (props) => {
               <Card.Title>{item.name}</Card.Title>
               <Card.Text>{item.description}</Card.Text>
               <Row style={{ textAlign: 'center' }}>
-                <Col sm={4}>
-                  <Button variant="danger" className="m-3">
+                <Col className="d-grid gap-2">
+                  <Button variant="dark" className="m-3">
                     {item.quantity > 0 ? 'In Stock' : 'Out of Stock'}
                   </Button>
                 </Col>
-                <Col sm={4}>
-                  <Button variant="success" className="m-3">
+                <Col className="d-grid gap-2">
+                  <Button variant="dark" className="m-3">
                     Rs. {item.price}
                   </Button>
                 </Col>
-                <Col sm={4}>
-                  <Button variant="info" className="m-3">
+                <Col className="d-grid gap-2">
+                  <Button variant="dark" className="m-3">
                     {item.category}
                   </Button>
                 </Col>
@@ -106,9 +106,11 @@ const Product = (props) => {
               </Row>
             </Card.Body>
           </Card>
-          <Button variant="warning" className="mt-3" onClick={addToCart}>
-            <i className="fas fa-shopping-cart"></i> Add To Cart
-          </Button>
+          <div className="d-grid gap-2">
+            <Button variant="secondary" size="lg" className="mt-3" onClick={addToCart}>
+              <i className="fas fa-shopping-cart"></i> Add To Cart
+            </Button>
+          </div>
         </Col>
       </Row>
     </>
