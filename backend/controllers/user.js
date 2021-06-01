@@ -156,4 +156,30 @@ exports.changePassworrd = async (req,res,next) => {
     user.save();
     res.status(200).json({success:true,data:user.getPublicProfile()})
 }
+
+exports.createCart = async(req,res,next) => {
+    const user = await User.findById(req.user._id)
+    if(!user){
+        return res.status(404).json({success:false,msg:"User not found"})
+    }
+    
+    user.cart = []
+    user.cart = req.body.cart;
+    console.log("cart is ",req.body.cart)
+    user.save();
+    res.status(200).json({success:true,data:user})
+}
+
+exports.deleteCart = async(req,res,next) => {
+    console.log(req.body.cart)
+    const user = await User.findById(req.user._id)
+    if(!user){
+        return res.status(404).json({success:false,msg:"User not found"})
+    }
+    
+    user.cart = [];
+    user.save();
+    res.status(200).json({success:true,data:user})
+}
+
   
