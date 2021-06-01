@@ -30,12 +30,24 @@ const Profile = () => {
                 console.log(item);
                 return (
                   <ListGroup.Item>
-                    {item.name} === {item.quantity} === {item.price}
-                    ===
+                    {item.name} ===> {item.quantity} ===> {item.price}
+                    {'===> '}
                     <i class="fas fa-trash"></i>
                   </ListGroup.Item>
                 );
               })}
+              {/* <ListGroup.Item>
+                Item 2 <i class="fas fa-trash"></i>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Item 3 <i class="fas fa-trash"></i>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Item 4 <i class="fas fa-trash"></i>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Item 5 <i class="fas fa-trash"></i>
+              </ListGroup.Item> */}
             </ListGroup>
 
             <div>
