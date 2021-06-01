@@ -169,4 +169,16 @@ exports.createCart = async(req,res,next) => {
     res.status(200).json({success:true,data:user})
 }
 
+exports.deleteCart = async(req,res,next) => {
+    console.log(req.body.cart)
+    const user = await User.findById(req.user._id)
+    if(!user){
+        return res.status(404).json({success:false,msg:"User not found"})
+    }
+    
+    user.cart = null;
+    user.save();
+    res.status(200).json({success:true,data:user})
+}
+
   
