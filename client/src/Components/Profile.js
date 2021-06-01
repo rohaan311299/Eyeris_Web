@@ -50,17 +50,23 @@ const Profile = () => {
               </ListGroup.Item> */}
             </ListGroup>
 
-            <div>
-              <Button className="m-3" variant="success">
-                Proceed to checkout
-              </Button>
-              <Button className="m-3" variant="primary">
-                Sign Out
-              </Button>
-              <Button className="m-3" variant="danger">
-                Reset Password
-              </Button>
-            </div>
+            <Row>
+              <Col className="d-grid gap-2">
+                <Button className="mt-3" variant="dark" size="md">
+                  Proceed to checkout
+                </Button>
+              </Col>
+              <Col className="d-grid gap-2">
+                <Button className="mt-3" variant="dark" size="md">
+                  Sign Out
+                </Button>
+              </Col>
+              <Col className="d-grid gap-2">
+                <Button className="mt-3" variant="secondary" size="md">
+                  Reset Password
+                </Button>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>
