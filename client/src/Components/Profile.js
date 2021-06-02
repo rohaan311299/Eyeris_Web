@@ -7,55 +7,42 @@ const Profile = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     if (currentUser) {
-      setOrders(currentUser.orders);
-      console.log(currentUser.orders);
+      setOrders(currentUser.cart);
+      console.log(currentUser.cart);
     }
   });
   return (
     <div>
       <div className="container">
         <Row className="mt-3">
-          <Col sm={12} md={6}>
+          <Col sm={12} md={4}>
             <img
-              style={{ height: '75%', width: 'auto' }}
+              style={{ height: '50%', width: 'auto' }}
               src="https://miro.medium.com/max/3150/1*TQw2_wmdWlXYXVSsz45Kdw.jpeg"
             />
           </Col>
-          <Col sm={12} md={6}>
-            <h1>Rohan Kacheria</h1>
-
-            <h4>Your Cart Items:</h4>
+          <Col sm={12} md={8}>
+            <h1>{currentUser.name}</h1>
+            {/* <h4>Your Cart Items:</h4>
             <ListGroup>
               {orders.map((item) => {
                 console.log(item);
                 return (
                   <ListGroup.Item>
-                    {item.name} ===> {item.quantity} ===> {item.price}
-                    {'===> '}
+                    {item.name} === {item.quantity} === {item.price}
+                    ===
                     <i class="fas fa-trash"></i>
                   </ListGroup.Item>
                 );
               })}
-              {/* <ListGroup.Item>
-                Item 2 <i class="fas fa-trash"></i>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Item 3 <i class="fas fa-trash"></i>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Item 4 <i class="fas fa-trash"></i>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Item 5 <i class="fas fa-trash"></i>
-              </ListGroup.Item> */}
-            </ListGroup>
+            </ListGroup> */}
 
             <Row>
-              <Col className="d-grid gap-2">
+              {/* <Col className="d-grid gap-2">
                 <Button className="mt-3" variant="dark" size="md">
                   Proceed to checkout
                 </Button>
-              </Col>
+              </Col> */}
               <Col className="d-grid gap-2">
                 <Button className="mt-3" variant="dark" size="md">
                   Sign Out

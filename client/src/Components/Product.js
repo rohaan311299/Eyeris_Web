@@ -37,6 +37,23 @@ const Product = (props) => {
       .catch((error) => console.log('error', error));
   }, []);
 
+  function arrayBufferToBase64(buffer) {
+    console.log(buffer);
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    console.log(binary);
+    return window.btoa(binary);
+  }
+
+  function imageDisplay(data) {
+    var base64Flag = 'data:image/jpeg;base64,';
+    var imageStr = arrayBufferToBase64(data);
+    var image = base64Flag + imageStr;
+    console.log(image);
+    return image;
+  }
+
   function handleChange(event) {
     setQuantity(event.target.value);
     console.log(quantity);
@@ -51,9 +68,9 @@ const Product = (props) => {
       price: quantity * item.price,
     };
     console.log(itemAdded);
-    let orders = currentUser.orders;
-    orders.push(itemAdded);
-    setCurrentUser({ ...currentUser, orders: orders });
+    let cart = currentUser.cart;
+    cart.push(itemAdded);
+    setCurrentUser({ ...currentUser, cart: cart });
   }
 
   return (
@@ -64,7 +81,7 @@ const Product = (props) => {
       <Row className="pt-3">
         <Col sm={12} md={6}>
           <img
-            src="https://miro.medium.com/max/3150/1*TQw2_wmdWlXYXVSsz45Kdw.jpeg"
+            src={item.image ? imageDisplay(item.image.imageData.data) : ''}
             style={{ width: '80%', height: 'auto' }}
           />
         </Col>
@@ -107,7 +124,12 @@ const Product = (props) => {
             </Card.Body>
           </Card>
           <div className="d-grid gap-2">
-            <Button variant="secondary" size="lg" className="mt-3" onClick={addToCart}>
+            <Button
+              variant="secondary"
+              size="lg"
+              className="mt-3"
+              onClick={addToCart}
+            >
               <i className="fas fa-shopping-cart"></i> Add To Cart
             </Button>
           </div>

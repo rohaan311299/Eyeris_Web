@@ -6,7 +6,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     let token = localStorage.getItem('eyerisToken');
-    console.log(token);
     if (token) {
       var myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
@@ -23,11 +22,12 @@ export const AuthProvider = ({ children }) => {
         .then((response) => response.text())
         .then((result) => {
           result = JSON.parse(result);
-          console.log(result);
           result['token'] = token;
           if (result._id !== undefined && result._id !== null && result._id) {
-            console.log('Redirect to home page (logged in)');
             // setIsLoggedIn(true);
+            if (!result.cart) {
+              result.cart = [];
+            }
             setCurrentUser(result);
           } else {
             setCurrentUser(null);
