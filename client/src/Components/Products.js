@@ -26,13 +26,10 @@ const Products = () => {
       .then((response) => response.text())
       .then((result) => {
         result = JSON.parse(result);
-        console.log(result['data']);
-        var base64Flag = 'data:image/jpeg;base64,';
-        console.log(result['data'][0].image);
-        var imageStr = arrayBufferToBase64(result.data[0].image.imageData.data);
-        setImg(base64Flag + imageStr);
-        console.log(imageStr);
         setProducts(result.data);
+        // var base64Flag = 'data:image/jpeg;base64,';
+        // var imageStr = arrayBufferToBase64(result.data[0].image.imageData.data);
+        // setImg(base64Flag + imageStr);
       })
       .then(() => {
         console.log(img);
@@ -49,23 +46,35 @@ const Products = () => {
     return window.btoa(binary);
   }
 
+  function imageDisplay(data) {
+    var base64Flag = 'data:image/jpeg;base64,';
+    var imageStr = arrayBufferToBase64(data);
+    var image = base64Flag + imageStr;
+    console.log(image);
+    return image;
+  }
+
   return (
     <div>
       <h3>Our Products:</h3>
       <Row>
-        {products.map((product) => (
-          <Col sm={12} md={4}>
-            <Card style={{ width: '18rem' }} className="mb-3">
-              <Link to={`/product/${product._id}`}>
-                <Card.Img variant="top" src={img} alt={product.name} />
-              </Link>
-              <Card.Body>
-                <Card.Title>{product.name}</Card.Title>
-                <Card.Text>{product.description}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+        {products.map((product) => {
+          console.log(product);
+          const image = imageDisplay(product.image.imageData.data);
+          return (
+            <Col sm={12} md={4}>
+              <Card style={{ width: '18rem' }} className="mb-3">
+                <Link to={`/product/${product._id}`}>
+                  <Card.Img variant="top" src={image} alt={product.name} />
+                </Link>
+                <Card.Body>
+                  <Card.Title>{product.name}</Card.Title>
+                  <Card.Text>{product.description}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          );
+        })}
       </Row>
     </div>
   );
