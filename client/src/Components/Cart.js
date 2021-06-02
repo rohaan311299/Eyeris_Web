@@ -59,10 +59,6 @@ const Cart = () => {
       <div className="container">
         <Row className="mt-3">
           <Col sm={12} md={2}>
-            {/* <img
-              style={{ height: '50%', width: 'auto' }}
-              src="https://miro.medium.com/max/3150/1*TQw2_wmdWlXYXVSsz45Kdw.jpeg"
-            /> */}
           </Col>
           <Col sm={12} md={8}>
             <h1>{currentUser.name}</h1>

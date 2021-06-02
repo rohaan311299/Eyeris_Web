@@ -62,7 +62,7 @@ const Header = () => {
                 <>
                   <LinkContainer to="/profile">
                     <Nav.Link>
-                      <i className="fas fa-user-circle"></i>Profile
+                      <i className="fas fa-user-circle"></i> Profile
                     </Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/cart">
