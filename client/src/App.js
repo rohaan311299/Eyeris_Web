@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './auth/PrivateRoutes';
 import AuthProvider from './auth/AuthContext';
 import Product from './Components/Product';
+import Footer from "./Components/Footer";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <PrivateRoute exact path="/cart" component={Cart} />
           </Container>
         </Switch>
+        <Footer />
       </AuthProvider>
     </Router>
   );
