@@ -41,7 +41,9 @@ const UserSchema = new mongoose.Schema({
             ref : "Product"
         },
         quantity:Number,
-        price:Number
+        price:Number,
+        name:String,
+        description:String
     }],
     resetPasswordExpire:Date,
     orders:[{

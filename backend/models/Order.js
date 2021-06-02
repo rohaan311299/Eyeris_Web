@@ -30,7 +30,18 @@ const OrderSchema = new mongoose.Schema({
     address:{
         type:String,
         maxlen:200
-    }
+    },
+    detailedorder:[{
+        _id:false,
+        product:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref : "Product"
+        },
+        quantity:Number,
+        price:Number,
+        name:String,
+        description:String
+    }]
 
 },{
     timestamps:true
