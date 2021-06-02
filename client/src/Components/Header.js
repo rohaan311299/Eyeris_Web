@@ -18,10 +18,19 @@ const StyledBadge = withStyles((theme) => ({
 
 const Header = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-
+  const [totalItems, setTotalItems] = useState(0);
   useEffect(() => {
-    console.log(currentUser);
-  }, []);
+    //     {id: "60b488efbcc6112e982cd2ac", name: "Crizal Lens", category: "Lens", quantity: "2", price: 2600}
+    //  {id: "60b4894941e2422ba45f0525", name: "New Lens", category: "Lens", quantity: "4", price: 2000}
+
+    if (currentUser) {
+      let total = 0;
+      currentUser.cart.map((item) => {
+        total += +item.quantity;
+      });
+      setTotalItems(total);
+    }
+  }, [currentUser]);
   function logoutHandler() {
     setCurrentUser(null);
     localStorage.removeItem('eyerisToken');
@@ -58,8 +67,11 @@ const Header = () => {
                   <LinkContainer to="/profile">
                     <Nav.Link>
                       <IconButton aria-label="cart">
-                        <StyledBadge badgeContent={4} color="secondary">
-                          <ShoppingCartIcon className='ShoppingcartIcon  '/>
+                        <StyledBadge
+                          badgeContent={totalItems}
+                          color="secondary"
+                        >
+                          <ShoppingCartIcon className="ShoppingcartIcon  " />
                         </StyledBadge>
                       </IconButton>
                     </Nav.Link>

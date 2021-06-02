@@ -7,8 +7,8 @@ const Profile = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     if (currentUser) {
-      setOrders(currentUser.orders);
-      console.log(currentUser.orders);
+      setOrders(currentUser.cart);
+      console.log(currentUser.cart);
     }
   });
   return (

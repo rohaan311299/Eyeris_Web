@@ -7,7 +7,7 @@ import products from './data';
 const Products = () => {
   const [products, setProducts] = useState([]);
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-
+  const [img, setImg] = useState(null);
   useEffect(() => {
     const token = currentUser.token
       ? currentUser.token
@@ -26,11 +26,28 @@ const Products = () => {
       .then((response) => response.text())
       .then((result) => {
         result = JSON.parse(result);
-        console.log(result, result['data']);
+        console.log(result['data']);
+        var base64Flag = 'data:image/jpeg;base64,';
+        console.log(result['data'][0].image);
+        var imageStr = arrayBufferToBase64(result.data[0].image.imageData.data);
+        setImg(base64Flag + imageStr);
+        console.log(imageStr);
         setProducts(result.data);
+      })
+      .then(() => {
+        console.log(img);
       })
       .catch((error) => console.log('error', error));
   }, []);
+
+  function arrayBufferToBase64(buffer) {
+    console.log(buffer);
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    console.log(binary);
+    return window.btoa(binary);
+  }
 
   return (
     <div>
@@ -40,16 +57,7 @@ const Products = () => {
           <Col sm={12} md={4}>
             <Card style={{ width: '18rem' }} className="mb-3">
               <Link to={`/product/${product._id}`}>
-                <Card.Img
-                  variant="top"
-                  src={
-                    (product.img =
-                      product.img === undefined || product.img === null
-                        ? 'https://miro.medium.com/max/3150/1*TQw2_wmdWlXYXVSsz45Kdw.jpeg'
-                        : product.img)
-                  }
-                  alt={product.name}
-                />
+                <Card.Img variant="top" src={img} alt={product.name} />
               </Link>
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>

@@ -51,9 +51,9 @@ const Product = (props) => {
       price: quantity * item.price,
     };
     console.log(itemAdded);
-    let orders = currentUser.orders;
-    orders.push(itemAdded);
-    setCurrentUser({ ...currentUser, orders: orders });
+    let cart = currentUser.cart;
+    cart.push(itemAdded);
+    setCurrentUser({ ...currentUser, cart: cart });
   }
 
   return (
@@ -107,7 +107,12 @@ const Product = (props) => {
             </Card.Body>
           </Card>
           <div className="d-grid gap-2">
-            <Button variant="secondary" size="lg" className="mt-3" onClick={addToCart}>
+            <Button
+              variant="secondary"
+              size="lg"
+              className="mt-3"
+              onClick={addToCart}
+            >
               <i className="fas fa-shopping-cart"></i> Add To Cart
             </Button>
           </div>
