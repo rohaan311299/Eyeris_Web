@@ -23,7 +23,7 @@ const Profile = () => {
           </Col>
           <Col sm={12} md={8}>
             <h1>{currentUser.name}</h1>
-            <h4>Your Cart Items:</h4>
+            {/* <h4>Your Cart Items:</h4>
             <ListGroup>
               {orders.map((item) => {
                 console.log(item);
@@ -35,14 +35,14 @@ const Profile = () => {
                   </ListGroup.Item>
                 );
               })}
-            </ListGroup>
+            </ListGroup> */}
 
             <Row>
-              <Col className="d-grid gap-2">
+              {/* <Col className="d-grid gap-2">
                 <Button className="mt-3" variant="dark" size="md">
                   Proceed to checkout
                 </Button>
-              </Col>
+              </Col> */}
               <Col className="d-grid gap-2">
                 <Button className="mt-3" variant="dark" size="md">
                   Sign Out

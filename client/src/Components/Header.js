@@ -6,6 +6,7 @@ import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import './Header.css';
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -61,17 +62,15 @@ const Header = () => {
                 <>
                   <LinkContainer to="/profile">
                     <Nav.Link>
-                      <i className="fas fa-user-circle"></i>
+                      <i className="fas fa-user-circle"></i>Profile
                     </Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/profile">
+                  <LinkContainer to="/cart">
                     <Nav.Link>
                       <IconButton aria-label="cart">
-                        <StyledBadge
-                          badgeContent={totalItems}
-                          color="secondary"
-                        >
-                          <ShoppingCartIcon className="ShoppingcartIcon  " />
+                        <StyledBadge badgeContent={totalItems} color="primary">
+                          {/* Cart */}
+                          <ShoppingCartIcon className="ShoppingcartIcon  " />{' '}
                         </StyledBadge>
                       </IconButton>
                     </Nav.Link>
