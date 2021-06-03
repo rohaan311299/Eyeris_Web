@@ -7,6 +7,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Button } from 'react-bootstrap';
+import Footer from './Footer';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
