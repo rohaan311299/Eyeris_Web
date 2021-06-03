@@ -1,6 +1,7 @@
 const Order = require("../models/Order");
 const Product = require("../models/Product");
 const User = require("../models/User");
+const mongoose = require("mongoose");
 
 // protected route
 // api/v1/orders/getAllOrders
@@ -170,5 +171,21 @@ exports.cancelOrder =  async (req,res,next) => {
 
     res.status(200).json({success:false,data:`Order cancelled with id ${req.params.id}`})
 
+}
+
+exports.getAllCompletedOrders = async(req,res,next) => {
+    let order = await Order.find({user:req.user._id})
+
+    if(!order){
+        return res.status(404).json({success:false,msg:"No order till now"})
+    }
+
+    let completed_order = order.filter(function (o) {
+        return o.status == "completed";
+    });
+
+    console.log(completed_order);
+
+    res.status(200).json({success:true,data:completed_order})
 }
 
