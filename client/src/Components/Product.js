@@ -95,11 +95,11 @@ const Product = (props) => {
               <Card.Text>{item.description}</Card.Text>
               <Row style={{ textAlign: 'center' }}>
                 <Col className="d-grid gap-2">
-                  <Button variant="dark" className="m-3">
+                  <Button variant="dark" className="m-3" >
                     {item.quantity > 0 ? 'In Stock' : 'Out of Stock'}
                   </Button>
                 </Col>
-                <Col className="d-grid gap-2">
+                <Col className="d-grid gap-2" >
                   <Button variant="dark" className="m-3">
                     Rs. {item.price}
                   </Button>

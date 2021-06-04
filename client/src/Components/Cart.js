@@ -111,6 +111,16 @@ const Cart = () => {
                 </Button>
               </Col>
             </Row>
+            <div className="mt-3">
+              <p><strong>Important Points to note</strong></p>
+              <ul>
+                <li>Attach a screenshot of the Final Bill in the google form</li>
+                <li>Transfer the final amount to the following GPAY account: </li>
+                <li>Attach a screenshot of the succesfull transaction in the google form</li>
+                <li style={{color:"green"}}>Wait for one of us to confirm that your order has been succesfuly placed</li>
+                <li style={{color:"red"}}>In case of any discrepancy, the money will be refunded completely</li>
+              </ul>
+            </div>
           </Col>
         </Row>
       </div>
