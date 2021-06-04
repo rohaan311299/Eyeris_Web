@@ -5,13 +5,15 @@ import { Container } from 'react-bootstrap';
 import Login from './Components/Login';
 import Profile from './Components/Profile';
 import Cart from './Components/Cart';
+import Checkout from './Components/Checkout';
 import Register from './Components/Register';
 import Products from './Components/Products';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './auth/PrivateRoutes';
 import AuthProvider from './auth/AuthContext';
 import Product from './Components/Product';
-import Footer from "./Components/Footer";
+import Footer from './Components/Footer';
+import Orders from './Components/Orders';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
             <PrivateRoute exact path="/product/:id" component={Product} />
             <PrivateRoute exact path="/profile" component={Profile} />
             <PrivateRoute exact path="/cart" component={Cart} />
+            <PrivateRoute exact path="/orders" component={Orders} />
+            <PrivateRoute exact path="/checkout" component={Checkout} />
           </Container>
         </Switch>
         <Footer />
