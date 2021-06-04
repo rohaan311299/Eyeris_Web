@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../auth/AuthContext';
 import { Card, Row, Col, ListGroup, Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
+import {LinkContainer} from "react-router-bootstrap";
 
 const Cart = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
@@ -57,6 +58,11 @@ const Cart = () => {
   return (
     <div>
       <div className="container">
+        <LinkContainer to="/">
+          <Button className="mt-3" variant="dark">
+            Back to Products
+          </Button>
+        </LinkContainer>
         <Row className="mt-3">
           <Col sm={12} md={2}>
           </Col>
@@ -91,7 +97,7 @@ const Cart = () => {
 
             <Row>
               <Col className="d-grid gap-2">
-                <Button className="mt-3" variant="dark" size="md">
+                <Button className="mt-3" variant="dark">
                   Proceed to checkout
                 </Button>
               </Col>
@@ -99,7 +105,6 @@ const Cart = () => {
                 <Button
                   className="mt-3"
                   variant="dark"
-                  size="md"
                   onClick={saveCart}
                 >
                   Save Cart

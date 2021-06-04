@@ -46,3 +46,21 @@
   background: #282c34;
   color: white;
 }
+
+.form-length {
+  width: 30%;
+}
+
+.button-width {
+  width: 30%;
+}
+
+@media only screen and (max-width: 600px) {
+  .form-length {
+    width: 100%;
+  }
+
+  .button-width {
+    width: 100%;
+  }
+}

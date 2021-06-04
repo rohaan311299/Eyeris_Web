@@ -15,7 +15,7 @@ const Profile = () => {
   return (
     <div>
       <LinkContainer to="/">
-        <Button variant="dark" className="mt-3">Go Back</Button>
+        <Button variant="dark" className="mt-3">Back to Products</Button>
       </LinkContainer>
       <div className="container">
         <Row className="mt-3">
