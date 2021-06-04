@@ -38,11 +38,9 @@ const Products = () => {
   }, []);
 
   function arrayBufferToBase64(buffer) {
-    console.log(buffer);
     var binary = '';
     var bytes = [].slice.call(new Uint8Array(buffer));
     bytes.forEach((b) => (binary += String.fromCharCode(b)));
-    console.log(binary);
     return window.btoa(binary);
   }
 
@@ -50,7 +48,6 @@ const Products = () => {
     var base64Flag = 'data:image/jpeg;base64,';
     var imageStr = arrayBufferToBase64(data);
     var image = base64Flag + imageStr;
-    console.log(image);
     return image;
   }
 
