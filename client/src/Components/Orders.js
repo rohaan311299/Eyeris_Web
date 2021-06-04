@@ -2,11 +2,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../auth/AuthContext';
 import { Card, Row, Col, ListGroup, Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Router } from 'react-router';
 
-const Cart = () => {
+const Orders = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -72,16 +70,21 @@ const Cart = () => {
   return (
     <div>
       <div className="container">
-        <LinkContainer to="/">
+        <LinkContainer to="/cart">
           <Button className="mt-3" variant="dark">
-            Back to Products
+            Back to Cart
           </Button>
         </LinkContainer>
         <Row className="mt-3">
           <Col sm={12} md={2}></Col>
           <Col sm={12} md={8}>
             <h1>{currentUser.name}</h1>
-            <h4>Your Cart Items: {totalValue}</h4>
+          </Col>
+        </Row>
+        <Row className="mt-3">
+          <Col sm={12} md={2}></Col>
+          <Col sm={12} md={8}>
+            <h4>Your Orders: </h4>
 
             <Table responsive>
               <thead>
@@ -93,11 +96,11 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                {cartItems.map((item) => {
+                {orders.map((item) => {
                   return (
                     <>
                       <tr>
-                        <td>{cartItems.indexOf(item) + 1}</td>
+                        <td>{orders.indexOf(item) + 1}</td>
                         <td>{item.name}</td>
                         <td>{item.quantity}</td>
                         <td>{item.price}</td>
@@ -108,20 +111,31 @@ const Cart = () => {
               </tbody>
             </Table>
 
-            <Row>
-              <Col className="d-grid gap-2">
-                <Link to="/checkout">
-                  <Button className="mt-3" variant="dark">
-                    Confirm Order
-                  </Button>
-                </Link>
-              </Col>
-              <Col className="d-grid gap-2">
-                <Button className="mt-3" variant="dark" onClick={saveCart}>
-                  Save Cart for Later
-                </Button>
-              </Col>
-            </Row>
+            <div className="mt-3">
+              <p>
+                <strong>Important Points to note</strong>
+              </p>
+              <ul>
+                <li>
+                  Attach a screenshot of the Final Bill in the google form
+                </li>
+                <li>
+                  Transfer the final amount to the following GPAY account:{' '}
+                </li>
+                <li>
+                  Attach a screenshot of the succesfull transaction in the
+                  google form
+                </li>
+                <li style={{ color: 'green' }}>
+                  Wait for one of us to confirm that your order has been
+                  succesfuly placed
+                </li>
+                <li style={{ color: 'red' }}>
+                  In case of any discrepancy, the money will be refunded
+                  completely
+                </li>
+              </ul>
+            </div>
           </Col>
         </Row>
       </div>
@@ -129,4 +143,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Orders;

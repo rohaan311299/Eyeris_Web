@@ -6,7 +6,7 @@ import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 const Product = (props) => {
   const [item, setItem] = useState({});
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     let productId = props.match.params.id;
@@ -79,7 +79,7 @@ const Product = (props) => {
   return (
     <>
       <Link className="btn btn-dark my-3" to="/">
-        Go Back
+        Back to Products
       </Link>
       <Row className="pt-3">
         <Col sm={12} md={6}>
@@ -114,7 +114,12 @@ const Product = (props) => {
                 <Col>Qty:</Col>
                 <Col>
                   <Form.Group>
-                    <Form.Control as="select" size="md" onChange={handleChange}>
+                    <Form.Control
+                      as="select"
+                      size="md"
+                      onChange={handleChange}
+                      style={{ backgroundColor: 'white' }}
+                    >
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -127,12 +132,7 @@ const Product = (props) => {
             </Card.Body>
           </Card>
           <div className="d-grid gap-2">
-            <Button
-              variant="secondary"
-              size="lg"
-              className="mt-3"
-              onClick={addToCart}
-            >
+            <Button variant="secondary" className="mt-3" onClick={addToCart}>
               <i className="fas fa-shopping-cart"></i> Add To Cart
             </Button>
           </div>

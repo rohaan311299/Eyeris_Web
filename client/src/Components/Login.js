@@ -109,6 +109,7 @@ const Login = (props) => {
             value={userData.email}
             onKeyPress={keyPressed}
             name="email"
+            className="form-length"
           />
         </Form.Group>
 
@@ -123,11 +124,15 @@ const Login = (props) => {
             onKeyPress={keyPressed}
             value={userData.password}
             name="password"
+            className="form-length"
           />
         </Form.Group>
-        <Button variant="primary" onClick={loginHandler}>
-          Login
-        </Button>
+        <div className="d-grid gap-2 button-width">
+          <Button variant="primary"  onClick={loginHandler}>
+            Login
+          </Button>
+        </div>
+        
         <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">
             {message}
