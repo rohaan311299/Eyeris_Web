@@ -9,6 +9,10 @@ const Profile = () => {
     if (currentUser) {
     }
   });
+  function logoutHandler() {
+    setCurrentUser(null);
+    localStorage.removeItem('eyerisToken');
+  }
   return (
     <div>
       <LinkContainer to="/">
@@ -46,7 +50,12 @@ const Profile = () => {
 
             <Row>
               <Col className="d-grid gap-2">
-                <Button className="mt-3" variant="dark" size="md">
+                <Button
+                  className="mt-3"
+                  variant="dark"
+                  size="md"
+                  onClick={logoutHandler}
+                >
                   Sign Out
                 </Button>
               </Col>
