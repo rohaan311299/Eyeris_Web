@@ -13,7 +13,7 @@ import PrivateRoute from './auth/PrivateRoutes';
 import AuthProvider from './auth/AuthContext';
 import Product from './Components/Product';
 import Footer from './Components/Footer';
-import Orders from './Components/Orders';
+import Orders from './Components/Myorders';
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
             <PrivateRoute exact path="/product/:id" component={Product} />
             <PrivateRoute exact path="/profile" component={Profile} />
             <PrivateRoute exact path="/cart" component={Cart} />
-            <PrivateRoute exact path="/orders" component={Orders} />
+            <PrivateRoute exact path="/myorders" component={Orders} />
             <PrivateRoute exact path="/checkout" component={Checkout} />
           </Container>
         </Switch>

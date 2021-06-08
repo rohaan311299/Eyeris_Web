@@ -67,6 +67,7 @@ const Login = (props) => {
         console.log(result, result.success);
         if (result.success) {
           localStorage.setItem('eyerisToken', result.token);
+          localStorage.setItem('user', result.sendUser);
           setCurrentUser(result.sendUser);
           console.log(result.sendUser);
         } else {
@@ -128,11 +129,11 @@ const Login = (props) => {
           />
         </Form.Group>
         <div className="d-grid gap-2 button-width">
-          <Button variant="primary"  onClick={loginHandler}>
+          <Button variant="primary" onClick={loginHandler}>
             Login
           </Button>
         </div>
-        
+
         <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">
             {message}
