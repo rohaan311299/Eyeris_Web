@@ -7,16 +7,83 @@ import { TextField } from '@material-ui/core';
 
 const Checkout = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-  const [cartItems, setCartItems] = useState([]);
-  const [orders, setOrders] = useState([]);
-  const [totalValue, setTotalValue] = useState(0);
-  const [cart, setCart] = useState([]);
+  const [address, setAddress] = useState('');
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     if (currentUser) {
+      if (currentUser.cart) {
+        let products = [];
+        currentUser.cart.forEach((item) => {
+          products.push(item.product);
+        });
+        setProducts(products);
+      }
     }
   }, []);
 
+  function submitOrder() {
+    console.log('HOLA');
+    const token = currentUser.token
+      ? currentUser.token
+      : localStorage.getItem('eyerisToken');
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', 'Bearer ' + token);
+    myHeaders.append('Cookie', 'token=' + token);
+    var raw = JSON.stringify({
+      totalPrice: currentUser.totalPrice,
+      address: address,
+      products: products,
+      detailedorder: currentUser.cart,
+    });
+    console.log(raw);
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch('http://localhost:5000/api/v1/order/createOrder', requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        myHeaders.append('Authorization', 'Bearer ' + token);
+        myHeaders.append('Cookie', 'token=' + token);
+
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow',
+        };
+        console.log(myHeaders);
+        fetch('http://localhost:5000/api/v1/user/me', requestOptions)
+          .then((response) => response.text())
+          .then((result) => {
+            result = JSON.parse(result);
+            result['token'] = token;
+            if (result._id !== undefined && result._id !== null && result._id) {
+              // setIsLoggedIn(true);
+              if (!result.cart) {
+                result.cart = [];
+              }
+              setCurrentUser(result);
+            } else {
+              setCurrentUser(null);
+              console.log('No user');
+              localStorage.removeItem('eyerisToken');
+            }
+          })
+          .catch((error) => console.log('error', error));
+      })
+      .catch((error) => console.log('error', error));
+  }
+  function handleChange(event) {
+    setAddress(event.target.value);
+  }
   return (
     <div>
       <div className="container">
@@ -35,7 +102,13 @@ const Checkout = () => {
           <Col sm={12} md={2}></Col>
           <Col sm={12} md={8}>
             <h4>Enter Address Details </h4>
-            <TextField placeholder="Enter Address" label="Address" fullWidth />
+            <TextField
+              placeholder="Enter Address"
+              label="Address"
+              fullWidth
+              value={address}
+              onChange={handleChange}
+            />
             <div className="mt-3">
               <p>
                 <strong>Important Points to note</strong>
@@ -60,6 +133,7 @@ const Checkout = () => {
                   completely
                 </li>
               </ul>
+              <Button onClick={submitOrder}> Confirm Order</Button>
             </div>
           </Col>
         </Row>

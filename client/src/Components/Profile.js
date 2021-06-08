@@ -1,21 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../auth/AuthContext';
 import { Card, Row, Col, ListGroup, Button, Form } from 'react-bootstrap';
-import {LinkContainer} from "react-router-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap';
 
 const Profile = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-  const [orders, setOrders] = useState([]);
   useEffect(() => {
     if (currentUser) {
-      setOrders(currentUser.cart);
-      console.log(currentUser.cart);
     }
   });
   return (
     <div>
       <LinkContainer to="/">
-        <Button variant="dark" className="mt-3">Back to Products</Button>
+        <Button variant="dark" className="mt-3">
+          Back to Products
+        </Button>
       </LinkContainer>
       <div className="container">
         <Row className="mt-3">
@@ -28,10 +27,19 @@ const Profile = () => {
           <Col sm={12} md={8}>
             <Card>
               <Card.Body>
-                <Card.Title><strong>Name: </strong>{currentUser.name}</Card.Title>
+                <Card.Title>
+                  <strong>Name: </strong>
+                  {currentUser.name}
+                </Card.Title>
                 <Card.Text>
-                  <p><strong>Email: </strong>{currentUser.email}</p>
-                  <p><strong>Mobile: </strong>{currentUser.mobile}</p>
+                  <p>
+                    <strong>Email: </strong>
+                    {currentUser.email}
+                  </p>
+                  <p>
+                    <strong>Mobile: </strong>
+                    {currentUser.mobile}
+                  </p>
                 </Card.Text>
               </Card.Body>
             </Card>

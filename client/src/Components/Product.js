@@ -32,17 +32,17 @@ const Product = (props) => {
         if (result.data === undefined) {
           <Redirect to={'/products'} />;
         }
-        console.log(result.data);
+        // console.log(result.data);
       })
       .catch((error) => console.log('error', error));
   }, []);
 
   function arrayBufferToBase64(buffer) {
-    console.log(buffer);
+    // console.log(buffer);
     var binary = '';
     var bytes = [].slice.call(new Uint8Array(buffer));
     bytes.forEach((b) => (binary += String.fromCharCode(b)));
-    console.log(binary);
+    // console.log(binary);
     return window.btoa(binary);
   }
 
@@ -50,7 +50,7 @@ const Product = (props) => {
     var base64Flag = 'data:image/jpeg;base64,';
     var imageStr = arrayBufferToBase64(data);
     var image = base64Flag + imageStr;
-    console.log(image);
+    // console.log(image);
     return image;
   }
 
@@ -60,20 +60,31 @@ const Product = (props) => {
   }
 
   function addToCart() {
-    let itemAdded = {
-      id: item._id,
-      name: item.name,
-      category: item.category,
-      quantity: quantity,
-      price: quantity * item.price,
-    };
-    console.log(itemAdded);
-    let orders = currentUser.orders;
-    orders.push(item);
-    setCurrentUser({ ...currentUser, orders: orders });
     let cart = currentUser.cart;
-    cart.push(itemAdded);
-    setCurrentUser({ ...currentUser, cart: cart });
+    const { length } = cart;
+    const id = length + 1;
+    const found = cart.some((el) => el.product === item._id);
+    console.log(found);
+    if (!found) {
+      let itemAdded = {
+        product: item._id,
+        name: item.name,
+        category: item.category,
+        quantity: parseInt(quantity),
+        price: parseInt(quantity * item.price),
+      };
+      console.log(itemAdded);
+      cart.push(itemAdded);
+      setCurrentUser({ ...currentUser, cart: cart });
+    } else {
+      console.log('EXISTING');
+      let objIndex = cart.findIndex((obj) => obj.product === item._id);
+      cart[objIndex].quantity =
+        +parseInt(cart[objIndex].quantity) + +parseInt(quantity);
+      cart[objIndex].price = cart[objIndex].quantity * item.price;
+      console.log(cart);
+      setCurrentUser({ ...currentUser, cart: cart });
+    }
   }
 
   return (

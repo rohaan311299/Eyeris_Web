@@ -33,8 +33,8 @@ const Cart = () => {
       currentUser.orders.forEach((item) => {
         orderId.push(item);
       });
-
       setTotalValue(total);
+      setCurrentUser({ ...currentUser, totalPrice: total });
       setCart(cartDB);
     }
   }, []);
