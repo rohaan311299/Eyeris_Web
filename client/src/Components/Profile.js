@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../auth/AuthContext';
-import { Card, Row, Col, ListGroup, Button } from 'react-bootstrap';
+import { Card, Row, Col, ListGroup, Button, Form } from 'react-bootstrap';
 import {LinkContainer} from "react-router-bootstrap";
 
 const Profile = () => {
