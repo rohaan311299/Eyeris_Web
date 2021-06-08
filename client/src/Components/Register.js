@@ -133,6 +133,7 @@ const Register = (props) => {
             onKeyPress={keyPressed}
             value={userData.fullname}
             name="fullname"
+            className="form-length"
           />
         </Form.Group>
 
@@ -147,6 +148,7 @@ const Register = (props) => {
             value={userData.email}
             name="email"
             placeholder="Enter your Email Address"
+            className="form-length"
           />
         </Form.Group>
 
@@ -161,6 +163,7 @@ const Register = (props) => {
             value={userData.number}
             name="number"
             placeholder="Enter your Phone Number"
+            className="form-length"
           />
         </Form.Group>
 
@@ -176,12 +179,15 @@ const Register = (props) => {
             value={userData.password}
             name="password"
             placeholder="Enter your desired Password"
+            className="form-length"
           />
         </Form.Group>
 
-        <Button variant="primary" onClick={registerHandler}>
-          Register
-        </Button>
+        <div className="d-grid gap-2 button-width">
+          <Button variant="primary"  onClick={registerHandler}>
+            Register
+          </Button>
+        </div>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">
             {message}

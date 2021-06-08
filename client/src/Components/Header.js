@@ -67,12 +67,9 @@ const Header = () => {
                   </LinkContainer>
                   <LinkContainer to="/cart">
                     <Nav.Link>
-                      <IconButton aria-label="cart">
                         <StyledBadge badgeContent={totalItems} color="primary">
-                          {/* Cart */}
-                          <ShoppingCartIcon className="ShoppingcartIcon  " />{' '}
+                          <i class="fas fa-shopping-cart" style={{color:"white"}}></i>
                         </StyledBadge>
-                      </IconButton>
                     </Nav.Link>
                   </LinkContainer>
                 </>

@@ -38,11 +38,27 @@
 }
 
 .footer {
+  background: #282c34;
+  color: white;
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 50px; /* Height of the footer */
-  padding-top: 15px;
-  background: #282c34;
-  color: white;
+}
+
+.form-length {
+  width: 30%;
+}
+
+.button-width {
+  width: 30%;
+}
+
+@media only screen and (max-width: 600px) {
+  .form-length {
+    width: 100%;
+  }
+
+  .button-width {
+    width: 100%;
+  }
 }
