@@ -8,6 +8,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   const { currentUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    console.log(currentUser);
     if (currentUser) {
       setLoading(false);
     }
