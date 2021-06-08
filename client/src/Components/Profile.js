@@ -60,6 +60,13 @@ const Profile = () => {
                 </Button>
               </Col>
               <Col className="d-grid gap-2">
+                <LinkContainer to="/myorders">
+                  <Button className="mt-3" variant="dark" size="md">
+                    My Orders
+                  </Button>
+                </LinkContainer>
+              </Col>
+              <Col className="d-grid gap-2">
                 <Button className="mt-3" variant="secondary" size="md">
                   Reset Password
                 </Button>

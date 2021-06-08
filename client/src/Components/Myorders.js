@@ -17,47 +17,86 @@ const Myorders = () => {
     console.log(1);
     if (currentUser) {
       console.log(currentUser);
+      if (currentUser.orders) {
+        getOrder();
+      }
     }
   }, []);
 
+  function getOrder() {
+    const token = currentUser.token
+      ? currentUser.token
+      : localStorage.getItem('eyerisToken');
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', 'Bearer ' + token);
+    myHeaders.append('Cookie', 'token=' + token);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+
+    fetch('http://localhost:5000/api/v1/order/getMyOrders', requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        result = JSON.parse(result);
+        setOrders(result.data);
+      })
+      .catch((error) => console.log('error', error));
+  }
   return (
     <div>
       <div className="container">
         <LinkContainer to="/">
           <Button className="mt-3" variant="dark">
-            Back to Products
+            Back to Profile
           </Button>
         </LinkContainer>
         <Row className="mt-3">
           <Col sm={12} md={2}></Col>
           <Col sm={12} md={8}>
-            <h1>{currentUser.name}</h1>
-            <h4>Your Cart Items: {totalValue}</h4>
+            <h1>Hello {currentUser.name},</h1>
+            <h5>Your Past Orders are:</h5>
+            <br></br>
 
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cartItems.map((item) => {
-                  return (
-                    <>
+            {orders.map((order) => {
+              console.log(order);
+              return (
+                <>
+                  <Table responsive>
+                    <thead>
+                      {/* <tr> */}
+                      <th>Order #{orders.indexOf(order) + 1}</th>
+                      {/* </tr> */}
                       <tr>
-                        <td>{cartItems.indexOf(item) + 1}</td>
-                        <td>{item.name}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.price}</td>
+                        <th>Sr No.</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
                       </tr>
-                    </>
-                  );
-                })}
-              </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+                      {order.detailedorder
+                        ? order.detailedorder.map((item) => {
+                            console.log(item);
+                            return (
+                              <tr>
+                                <td>{order.detailedorder.indexOf(item) + 1}</td>
+                                <td>{item.name}</td>
+                                <td>{item.quantity}</td>
+                                <td>{item.price}</td>
+                              </tr>
+                            );
+                          })
+                        : null}
+                    </tbody>
+                  </Table>
+                  <br></br>
+                </>
+              );
+            })}
 
             <Row>
               <Col className="d-grid gap-2">
