@@ -35,7 +35,7 @@ const Checkout = () => {
       totalPrice: currentUser.totalPrice,
       address: address,
       products: products,
-      detailedorder: currentUser.cart,
+      detailedrder: currentUser.cart,
     });
     console.log(raw);
     var requestOptions = {
@@ -49,35 +49,43 @@ const Checkout = () => {
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
-        var myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
-        myHeaders.append('Authorization', 'Bearer ' + token);
-        myHeaders.append('Cookie', 'token=' + token);
+        getCurrentUser();
+        setAddress('');
+      })
+      .catch((error) => console.log('error', error));
+  }
 
-        var requestOptions = {
-          method: 'GET',
-          headers: myHeaders,
-          redirect: 'follow',
-        };
-        console.log(myHeaders);
-        fetch('http://localhost:5000/api/v1/user/me', requestOptions)
-          .then((response) => response.text())
-          .then((result) => {
-            result = JSON.parse(result);
-            result['token'] = token;
-            if (result._id !== undefined && result._id !== null && result._id) {
-              // setIsLoggedIn(true);
-              if (!result.cart) {
-                result.cart = [];
-              }
-              setCurrentUser(result);
-            } else {
-              setCurrentUser(null);
-              console.log('No user');
-              localStorage.removeItem('eyerisToken');
-            }
-          })
-          .catch((error) => console.log('error', error));
+  function getCurrentUser() {
+    const token = currentUser.token
+      ? currentUser.token
+      : localStorage.getItem('eyerisToken');
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', 'Bearer ' + token);
+    myHeaders.append('Cookie', 'token=' + token);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+    console.log(myHeaders);
+    fetch('http://localhost:5000/api/v1/user/me', requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        result = JSON.parse(result);
+        result['token'] = token;
+        if (result._id !== undefined && result._id !== null && result._id) {
+          // setIsLoggedIn(true);
+          if (!result.cart) {
+            result.cart = [];
+          }
+          setCurrentUser(result);
+        } else {
+          setCurrentUser(null);
+          console.log('No user');
+          localStorage.removeItem('eyerisToken');
+        }
       })
       .catch((error) => console.log('error', error));
   }

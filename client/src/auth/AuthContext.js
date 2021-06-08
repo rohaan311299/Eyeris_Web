@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
         headers: myHeaders,
         redirect: 'follow',
       };
-      console.log(myHeaders);
       fetch('http://localhost:5000/api/v1/user/me', requestOptions)
         .then((response) => response.text())
         .then((result) => {
@@ -28,6 +27,7 @@ export const AuthProvider = ({ children }) => {
             if (!result.cart) {
               result.cart = [];
             }
+            console.log(result);
             setCurrentUser(result);
           } else {
             setCurrentUser(null);
