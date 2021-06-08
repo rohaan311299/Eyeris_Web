@@ -32,7 +32,7 @@ const Products = () => {
         // setImg(base64Flag + imageStr);
       })
       .then(() => {
-        console.log(img);
+        // console.log(img);
       })
       .catch((error) => console.log('error', error));
   }, []);

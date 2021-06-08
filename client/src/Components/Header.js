@@ -26,9 +26,11 @@ const Header = () => {
 
     if (currentUser) {
       let total = 0;
-      currentUser.cart.map((item) => {
-        total += +item.quantity;
-      });
+      if (currentUser.cart) {
+        currentUser.cart.map((item) => {
+          total += +item.quantity;
+        });
+      }
       setTotalItems(total);
     }
   }, [currentUser]);
@@ -67,9 +69,12 @@ const Header = () => {
                   </LinkContainer>
                   <LinkContainer to="/cart">
                     <Nav.Link>
-                        <StyledBadge badgeContent={totalItems} color="primary">
-                          <i class="fas fa-shopping-cart" style={{color:"white"}}></i>
-                        </StyledBadge>
+                      <StyledBadge badgeContent={totalItems} color="primary">
+                        <i
+                          class="fas fa-shopping-cart"
+                          style={{ color: 'white' }}
+                        ></i>
+                      </StyledBadge>
                     </Nav.Link>
                   </LinkContainer>
                 </>
