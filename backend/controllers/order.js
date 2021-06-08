@@ -54,19 +54,21 @@ exports.getOrderById = async(req,res,next) => {
 
 exports.createOrder = async(req,res)=>{
     const user = req.user._id;
-    const {products,totalPrice,address} = req.body;
+    const {products,totalPrice,address,detailedorder} = req.body;
     if(products.length==0)return res.status(400).json({msg:"Empty cart"})
     const order = await Order.create({
         user:user,
         products,
         totalPrice,
         quantity:products.length,
-        address:address
+        address:address,
+        detailedorder:detailedorder,
     });
 
     const userdata = await User.findById(req.user._id)
 
     userdata.orders.push(order._id);
+    userdata.cart = [];
     await userdata.save();
 
     return res.status(201).json({success:true,msg:"Order created successfully",data:order})
