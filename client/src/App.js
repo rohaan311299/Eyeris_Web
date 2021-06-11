@@ -14,6 +14,7 @@ import AuthProvider from './auth/AuthContext';
 import Product from './Components/Product';
 import Footer from './Components/Footer';
 import Orders from './Components/Myorders';
+import Admin from "./Components/Admin";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <PrivateRoute exact path="/cart" component={Cart} />
             <PrivateRoute exact path="/myorders" component={Orders} />
             <PrivateRoute exact path="/checkout" component={Checkout} />
+            <PrivateRoute exact path="/admin" component={Admin} />
           </Container>
         </Switch>
         <Footer />
